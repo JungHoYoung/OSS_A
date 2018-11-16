@@ -10,10 +10,10 @@ public class Main {
     public Main(){
       mine = new int[10][10];
       Board = new char[10][10];
-      initializeMines();          //ÃÊ±âÈ­µÈ ÆÇ
-      placeMines();                //Áö·Ú¸¦ ¹«ÀÛÀ§ À§Ä¡·Î Ã¤¿ò
-      NominesOfSurroundingNeighbours(); //ÁÖº¯¿¡ Áö·Ú°¡ ÀÖ´ÂÁö ¼ýÀÚ·Î Ç¥ÇöÇØÁÜ
-      startBoard();                      //°ÔÀÓ½ÃÀÛ
+      initializeMines();          //ì´ˆê¸°í™”ëœ íŒ
+      placeMines();                //ì§€ë¢°ë¥¼ ë¬´ìž‘ìœ„ ìœ„ì¹˜ë¡œ ì±„ì›€
+      NominesOfSurroundingNeighbours(); //ì£¼ë³€ì— ì§€ë¢°ê°€ ìžˆëŠ”ì§€ ìˆ«ìžë¡œ í‘œí˜„í•´ì¤Œ
+      startBoard();                      //ê²Œìž„ì‹œìž‘
 }
     public boolean win() {
     	int count = 0;
@@ -57,8 +57,74 @@ public class Main {
     		return true;
     	else
     		return false;
-    	}
-    
-    
-    
-    }
+		
+	}
+	
+	public void showMain() {
+		System.out.println("\n		Lines");
+		for(int Line = 8; Line > 0; Line--) {
+			System.out.print("		" + Line + " ");
+			
+			for(int Column = 1; Column < 9; Column++) {
+				System.out.print("	" + actualMain[Line][Column]);
+			}
+			
+			System.out.println();
+		}
+		
+		System.out.println("\n			1	2	3	4	5	6	7	8");
+		System.out.println("					Columns");
+		
+	}
+	
+	public void fillnoOfSurroundingNeighbours() {
+		for(int line = 1; line < 9; column++)
+			for(int column = 1; column < 9; column++) {
+			
+				for(int i = -1; i <=1; i++)
+					for(int j = -1; j <= 1; j++)
+						if(mines[line][column] != -1)
+							if(mines[line+i][column+j] == -1)
+								mines[line][column]++;
+			}
+	}
+	
+	public void revealMines() {
+		for(int i = 1; i < 9; i++)
+			for(int j = 1; j < 9; j++)
+				if(mines[i][j] == -1)
+					actualMain[i][j] = '#';
+		
+		showMain();
+	}
+	
+	public void startBoard() {
+		for(int i = 1; i < mines.length; i++)
+			for(int j = 1; j < mines.length; j++)
+				actualMain[i][j] = '*';
+	}
+	
+	public void initialzieMines() {
+		for(int i = 0; i < mines.length; i++)
+			for(int j = 0; j < mines.length; j++)
+				miens[i][j] = 0;
+	}
+	
+	public void placeMines() {
+		boolean raffled;
+		int Line, Column;
+		for(int i = 0; i < 10; i++) {
+			do{
+				Line = random.nextInt(8) + 1;
+				Column = random.nextInt(8) + 1;
+				
+				if(mines[Line][Column] == -1)
+					raffled = true;
+				else
+					raffled = false;
+			}while(raffled);
+			
+			mines[Line][Column] = -1;
+		}
+	}
+}

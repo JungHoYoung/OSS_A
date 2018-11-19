@@ -37,3 +37,6 @@ public void startGame(Main main){
         main.revealMines();
         System.out.println("아쉽습니다. 지뢰를 선택했습니다.");
         // 패배시 메시지만 출력
+    }
+}
+}

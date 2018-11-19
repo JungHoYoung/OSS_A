@@ -112,19 +112,18 @@ public class Main {
 	
 	public void placeMines() {
 		boolean raffled;
-		int Line, Column;
 		for(int i = 0; i < 10; i++) {
 			do{
-				Line = random.nextInt(8) + 1;
-				Column = random.nextInt(8) + 1;
+				line = random.nextInt(8) + 1;
+				column = random.nextInt(8) + 1;
 				
-				if(mines[Line][Column] == -1)
+				if(mines[line][column] == -1)
 					raffled = true;
 				else
 					raffled = false;
 			}while(raffled);
 			
-			mines[Line][Column] = -1;
+			mines[line][column] = -1;
 		}
 	}
 }

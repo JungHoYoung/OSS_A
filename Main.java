@@ -1,4 +1,7 @@
 
+import java.util.Random;
+import java.util.Scanner;
+
 
 public class Main {
     private int[][] mines;

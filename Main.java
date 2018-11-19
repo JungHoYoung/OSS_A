@@ -8,7 +8,7 @@ public class Main {
     Scanner sc = new Scanner(System.in);
   
     public Main(){
-      mine = new int[10][10];
+      mines = new int[10][10];
       Board = new char[10][10];
       initializeMines();          //초기화된 판
       placeMines();                //지뢰를 무작위 위치로 채움
@@ -93,7 +93,7 @@ public class Main {
 		for(int i = 1; i < 9; i++)
 			for(int j = 1; j < 9; j++)
 				if(mines[i][j] == -1)
-					actualMain[i][j] = '#';
+					Board[i][j] = '#';
 		
 		showMain();
 	}
@@ -101,13 +101,13 @@ public class Main {
 	public void startBoard() {
 		for(int i = 1; i < mines.length; i++)
 			for(int j = 1; j < mines.length; j++)
-				actualMain[i][j] = '*';
+				Board[i][j] = '*';
 	}
 	
-	public void initialzieMines() {
+	public void initializeMines() {
 		for(int i = 0; i < mines.length; i++)
 			for(int j = 0; j < mines.length; j++)
-				miens[i][j] = 0;
+				mines[i][j] = 0;
 	}
 	
 	public void placeMines() {

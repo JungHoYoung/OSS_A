@@ -22,7 +22,7 @@ public void startGame(Main main){
         finish = main.readAndsetPosition(); // 입력 값을 받고 검사, 배치하는 함수 호출
 
         if(!finish){
-            main.search(); // 주변 8개의 칸을 조사
+            main.revealNeighbours(); // 주변 8개의 칸을 조사
             finish = main.win();
         }
 

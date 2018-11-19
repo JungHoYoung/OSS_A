@@ -18,8 +18,8 @@ public void startGame(Main main){
     do{
         count++;
         System.out.println(count + "번째 선택"); 
-        main.showGrid(); // 지뢰찾기 배열을 보여주는 함수 호출
-        finish = main.readAndSet(); // 입력 값을 받고 검사, 배치하는 함수 호출
+        main.showMain(); // 지뢰찾기 배열을 보여주는 함수 호출
+        finish = main.readAndsetPosition(); // 입력 값을 받고 검사, 배치하는 함수 호출
 
         if(!finish){
             main.search(); // 주변 8개의 칸을 조사

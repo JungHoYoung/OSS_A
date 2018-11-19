@@ -77,7 +77,7 @@ public class Main {
 		
 	}
 	
-	public void fillnoOfSurroundingNeighbours() {
+	public void NominesOfSurroundingNeighbours() {
 		for(int line = 1; line < 9; column++)
 			for(int column = 1; column < 9; column++) {
 			

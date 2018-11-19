@@ -66,7 +66,7 @@ public class Main {
 			System.out.print("		" + Line + " ");
 			
 			for(int Column = 1; Column < 9; Column++) {
-				System.out.print("	" + actualMain[Line][Column]);
+				System.out.print("	" + Board[Line][Column]);
 			}
 			
 			System.out.println();
@@ -112,18 +112,19 @@ public class Main {
 	
 	public void placeMines() {
 		boolean raffled;
+		int Line;
 		for(int i = 0; i < 10; i++) {
 			do{
-				line = random.nextInt(8) + 1;
+				Line = random.nextInt(8) + 1;
 				column = random.nextInt(8) + 1;
 				
-				if(mines[line][column] == -1)
+				if(mines[Line][column] == -1)
 					raffled = true;
 				else
 					raffled = false;
 			}while(raffled);
 			
-			mines[line][column] = -1;
+			mines[Line][column] = -1;
 		}
 	}
 }

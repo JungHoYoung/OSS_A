@@ -1,17 +1,17 @@
 import *.Main; // *.import.
 
-public class Minesweeper {
+public class MineSweeper {
 private Main main;
 boolean finish = false;
 int count=0;
 
-public Minesweeper(){
+public MineSweeper(){
     main = new Main();
     startGame(main);
 }
 
 public static void main(String[] args) {
-  new Minesweeper();
+  new MineSweeper();
 }
 
 public void startGame(Main main){
@@ -23,7 +23,7 @@ public void startGame(Main main){
 
         if(!finish){
             main.search(); // 주변 8개의 칸을 조사
-            finish = amin.win();
+            finish = main.win();
         }
 
     }while(!finish);

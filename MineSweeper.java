@@ -1,4 +1,4 @@
-import *.Main; // *.import.
+
 
 public class MineSweeper {
 private Main main;

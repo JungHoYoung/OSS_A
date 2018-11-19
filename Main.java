@@ -37,15 +37,15 @@ public class Main {
     				Board[row + i][column + j] = Character.forDigit(mines[row + i][column + j], 10);
     }
     
-    public int getPosition(int line, int column) {
-    	return mines[line][column];
+    public int getPosition(int Line, int Column) {
+    	return mines[Line][Column];
     }
     
     public boolean readAndsetPosition() {
     	do {
     		System.out.print("\nrow: ");
     		row = sc.nextInt();
-    		System.out.print("olumn: ");
+    		System.out.print("column: ");
     		column = sc.nextInt();
     		
     	if( (Board[row][column] != '*') && ((row < 9 && row > 0) && (column < 9 && column > 0)))
@@ -104,7 +104,7 @@ public class Main {
 	public void startBoard() {
 		for(int i = 1; i < mines.length; i++)
 			for(int j = 1; j < mines.length; j++)
-				Board[i][j] = '*';
+				Board[i][j] = '-';
 	}
 	
 	public void initializeMines() {

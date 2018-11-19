@@ -42,14 +42,14 @@ public class Main {
     	do {
     		System.out.print("\nrow: ");
     		row = sc.nextInt();
-    		System.out.print("Column: ");
+    		System.out.print("olumn: ");
     		column = sc.nextInt();
     		
     	if( (Board[row][column] != '*') && ((row < 9 && row > 0) && (column < 9 && column > 0)))
-    		System.out.println("Field already shown");
+    		System.out.println("이미 입력한 좌표입니다.");
     	
     	if( row < 1 || row > 8 || column < 1 || column > 8)
-    		System.out.println("Choose a number between 1 and 8");
+    		System.out.println("1~8 사이 숫자를 입력하세요.");
     	
     	}while((row < 1 || row > 8 || column < 1 || column > 8) || (Board[row][column] != '*'));
     	

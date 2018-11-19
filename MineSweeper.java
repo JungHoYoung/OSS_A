@@ -30,7 +30,7 @@ public void startGame(Main main){
     
     if(main.win()) {
         main.revealMines();
-        System.out.println("축하합니다. 당신의 선택 횟수는  "+count+" 입니다. ");
+        System.out.println("축하합니다. 당신은 "+count+"번째 턴에 이겼습니다. ");
         // 승리시 선택 횟수를 알려줌
     }
     else {

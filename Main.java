@@ -48,13 +48,13 @@ public class Main {
     		System.out.print("column: ");
     		column = sc.nextInt();
     		
-    	if( (Board[row][column] != '*') && ((row < 9 && row > 0) && (column < 9 && column > 0)))
+    	if( (Board[row][column] != '-') && ((row < 9 && row > 0) && (column < 9 && column > 0)))
     		System.out.println("이미 입력한 좌표입니다.");
     	
     	if( row < 1 || row > 8 || column < 1 || column > 8)
     		System.out.println("1~8 사이 숫자를 입력하세요.");
     	
-    	}while((row < 1 || row > 8 || column < 1 || column > 8) || (Board[row][column] != '*'));
+    	}while((row < 1 || row > 8 || column < 1 || column > 8) || (Board[row][column] != '-'));
     	
     	if(getPosition(row, column) == -1 )
     		return true;
@@ -81,7 +81,7 @@ public class Main {
 	}
 	
 	public void NominesOfSurroundingNeighbours() {
-		for(int line = 1; line < 9; column++)
+		for(int line = 1; line < 9; line++)
 			for(int column = 1; column < 9; column++) {
 			
 				for(int i = -1; i <=1; i++)

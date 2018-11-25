@@ -1,0 +1,120 @@
+package oss_mine;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
+
+// 버튼.setEnabled(false); // 버튼 클릭 불가 나중에 써먹을지도 몰라서 남겨둠
+
+
+public class mine extends JFrame {
+	JButton b1 = new JButton("1"); // 레벨 선택 버튼
+	JButton b2 = new JButton("2"); // 레벨 선택 버튼
+	JButton b3 = new JButton("3"); // 레벨 선택 버튼
+	JPanel jp = new JPanel(); // 패널 1
+	JPanel jp2 = new JPanel(); // 패널 2
+	JLabel jl = new JLabel("난이도 선택"); // 레이블 텍스트 설정
+
+public mine() {
+	super("지뢰찾기"); // 타이틀
+	
+	jp.add(jl); 
+	this.setLayout(new BorderLayout());
+	jp2.add(b1);
+	jp2.add(b2);
+	jp2.add(b3);
+	add(jp, "North");
+	add(jp2);
+	
+	b1.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	    	JOptionPane.showMessageDialog(null, "1단계"); // ※추후 삭제 하거나 이대로 가거나
+	    	dispose();
+	    	new level1();
+	    }
+	});
+	b2.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	    	JOptionPane.showMessageDialog(null, "2단계"); // "
+	    	dispose();
+	    	new level2();
+	    }
+	});
+	b3.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	    	JOptionPane.showMessageDialog(null, "3단계"); // "
+	    }
+	});
+	
+	setVisible(true); // 프레임 보이기
+	setSize(500, 500); // 프레임 사이즈 설정
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+}
+
+public class level1  extends JFrame {
+	JPanel jp = new JPanel(); // 패널 1
+	JPanel jp2 = new JPanel(); // 패널 2
+	
+	public level1() {
+		super("초급 단계"); // 타이틀
+		
+		this.setLayout(new BorderLayout()); // 레이아웃 설정
+		
+		JButton jb[] = new JButton[10]; // 버튼 10x10 생성
+    	for(int i = 0; i < 10; i++) {
+    		for(int j = 0; j < 10; j++) {
+        		jb[i] = new JButton(" "); // 10x10 맞추려고 띄어쓰기 넣음
+        		jp.add(jb[i]);
+    		}
+    	}
+    	add(jp);
+		
+		setVisible(true); // 프레임 보이기
+		setSize(470 , 400); // 프레임 사이즈 설정
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+	}
+}
+
+
+public class level2  extends JFrame {
+	JPanel jp = new JPanel(); // 패널 1
+	JPanel jp2 = new JPanel(); // 패널 2
+	
+	public level2() {
+		super("중급 단계"); // 타이틀
+		
+		this.setLayout(new BorderLayout()); // 레이아웃 설정
+		
+		JButton jb2[] = new JButton[10]; // 버튼 10x10 생성
+		for(int i = 0; i < 10; i++) {	// 10보다 큰 수가 들어가면 에러남 왜지
+    		for(int j = 0; j < 10; j++) {
+        		jb2[i] = new JButton(" ");
+        		jp.add(jb2[i]);
+    		}
+    	}
+		for(int i = 0; i < 10; i++) {
+    		for(int j = 0; j < 10; j++) {
+        		jb2[i] = new JButton(" ");
+        		jp.add(jb2[i]);
+    		}
+    	}
+		for(int i = 0; i < 5; i++) {
+    		for(int j = 0; j < 5; j++) {
+        		jb2[i] = new JButton(" ");
+        		jp.add(jb2[i]);
+    		}
+    	}
+    	add(jp);
+		
+		setVisible(true); // 프레임 보이기
+		setSize(680, 560); // 프레임 사이즈 설정
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+	}
+}
+
+public static void main(String[] args) {
+	// TODO Auto-generated method stub
+	new mine(); // 프레임 불러오기
+}
+}

@@ -80,7 +80,7 @@ public class Main_hard {
     	if( row < 1 || row > 32 || column < 1 || column > 32)
     		System.out.println("1~30  사이 숫자를 입력하세요.");
 			
-		if(num != 1 || num != 2)
+		if(num != 1 && num != 2)
     		System.out.println("1,2 지뢰를 찾거나 깃발 꽂을 수 있습니다");
     	
     	flag(row, column, num);

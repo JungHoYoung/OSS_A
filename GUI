@@ -59,7 +59,6 @@ public mine() {
 
 public class level1  extends JFrame {
 	JPanel jp = new JPanel(); // 패널 1
-	JPanel jp2 = new JPanel(); // 패널 2
 	
 	public level1() {
 		super("초급 단계"); // 타이틀
@@ -87,7 +86,6 @@ public class level1  extends JFrame {
 
 public class level2  extends JFrame {
 	JPanel jp = new JPanel(); // 패널 1
-	JPanel jp2 = new JPanel(); // 패널 2
 	
 	public level2() {
 		super("중급 단계"); // 타이틀
@@ -114,7 +112,6 @@ public class level2  extends JFrame {
 
 public class level3  extends JFrame {
 	JPanel jp = new JPanel(); // 패널 1
-	JPanel jp2 = new JPanel(); // 패널 2
 	
 	public level3() {
 		super("고급 단계"); // 타이틀

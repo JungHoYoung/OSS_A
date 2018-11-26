@@ -85,7 +85,13 @@ public class level1  extends JFrame {
     	}
     	for(int i = 0; i < 10; i++) { // 지뢰 위치를 정수형 변수[] mine에 담아 저장
     		int value = rnd.nextInt(10);
-    		mine[i][value] = 1;
+    		jb[i][value].addActionListener(new ActionListener() { // 버튼 눌렀을때
+    		    public void actionPerformed(ActionEvent e) {
+    		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
+    		    	dispose();
+    		    	new level1();
+    		    }
+    		});
     	}
     	add(jp);
 		
@@ -127,17 +133,13 @@ public class level2  extends JFrame {
     	for(int i = 0; i < 20; i++) {
     		int temp;
     		int value = rnd.nextInt(20);
-    		jb2[i][value].setText("0");
-    		temp = value;
-    		value = rnd.nextInt(20);
-    		for(;;) {
-    			if(temp == value)
-    				value = rnd.nextInt(20);
-    			else {
-    	    		jb2[i][value].setText("0");
-    	    		break;
-    			}
-    		}
+    		jb2[i][value].addActionListener(new ActionListener() { // 버튼 눌렀을때
+    		    public void actionPerformed(ActionEvent e) {
+    		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
+    		    	dispose();
+    		    	new level2();
+    		    }
+    		});
     	}
     	add(jp);
 		
@@ -166,29 +168,25 @@ public class level3  extends JFrame {
 		
 		this.setLayout(new BorderLayout()); // 레이아웃 설정
 		
-		JButton jb2[][] = new JButton[30][30];
+		JButton jb3[][] = new JButton[30][30];
 		for(int i = 0; i < 30; i++) {	
     		for(int j = 0; j < 30; j++) {
-        		jb2[i][j] = new JButton();
-        		jb2[i][j].setPreferredSize(new Dimension(20,20));
-        		jp.add(jb2[i][j]);
+        		jb3[i][j] = new JButton();
+        		jb3[i][j].setPreferredSize(new Dimension(20,20));
+        		jp.add(jb3[i][j]);
     		}
     	}
 
     	for(int i = 0; i < 30; i++) {
     		int temp;
     		int value = rnd.nextInt(30);
-    		jb2[i][value].setText("0");
-    		temp = value;
-    		value = rnd.nextInt(30);
-    		for(int j = 0; j <= 1; j++) {
-    			if(temp == value)
-    				value = rnd.nextInt(30);
-    			else {
-    	    		jb2[i][value].setText("0");
-    	    		break;
-    			}
-    		}
+    		jb3[i][value].addActionListener(new ActionListener() { // 버튼 눌렀을때
+    		    public void actionPerformed(ActionEvent e) {
+    		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
+    		    	dispose();
+    		    	new level3();
+    		    }
+    		});
     	}
     	add(jp);
 		
@@ -224,5 +222,13 @@ public static void main(String[] args) {
 
 // 11.26
 // 버튼 사이즈 조절, 지뢰 범위 설정, 난이도별 
+
+// 11.26
+// 버튼 사이즈 조절, 지뢰 범위 설정, 난이도별 
 // 모든 난이도에 리셋버튼 추가 / 아직 작동은 안됨
 // 지뢰판 클릭했을때 사용할 액션 리스너 베이스 깔아두고 주석처리 함
+
+// 11.26
+// 지뢰 클릭시 패널 닫고 다시 호출 기능 추가
+/* 이제 지뢰가 아닌 부분을 클릭했을때 버튼을 블럭 시키면서 숫자를 표시해주는 기능 추가
+   깃발 세우는 기능만 추가 하면 일단락 할듯 */ 

@@ -32,21 +32,18 @@ public mine() {
 	
 	b1.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-	    	JOptionPane.showMessageDialog(null, "1단계"); // ※추후 삭제 하거나 이대로 가거나
 	    	dispose();
 	    	new level1();
 	    }
 	});
 	b2.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-	    	JOptionPane.showMessageDialog(null, "2단계"); // "
 	    	dispose();
 	    	new level2();
 	    }
 	});
 	b3.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-	    	JOptionPane.showMessageDialog(null, "3단계"); // "
 	    	dispose();
 	    	new level3();
 	    }
@@ -63,6 +60,15 @@ public class level1  extends JFrame {
 	JPanel jp = new JPanel(); // 패널 1
 	public level1() {
 		super("초급 단계"); // 타이틀
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu = new JMenu("메뉴");
+		menu.add(new JMenuItem("새로운 시작"));
+		menu.add(new JMenuItem("리셋"));
+		
+		menuBar.add(menu);
+		this.setJMenuBar(menuBar);
+		
+		
 		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
 		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
 		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
@@ -85,7 +91,7 @@ public class level1  extends JFrame {
     	}
     	for(int i = 0; i < 10; i++) { // 지뢰 위치를 정수형 변수[] mine에 담아 저장
     		int value = rnd.nextInt(10);
-    		jb[i][value].addActionListener(new ActionListener() { // 버튼 눌렀을때
+    		jb[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
     		    public void actionPerformed(ActionEvent e) {
     		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
     		    	dispose();
@@ -99,8 +105,8 @@ public class level1  extends JFrame {
 		setResizable(false); // 창 사이즈 변경 불가
 		setSize(260 , 300); // 프레임 사이즈 설정
 		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
-	}
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}
 }
 
 
@@ -131,9 +137,8 @@ public class level2  extends JFrame {
     		}
     	}
     	for(int i = 0; i < 20; i++) {
-    		int temp;
     		int value = rnd.nextInt(20);
-    		jb2[i][value].addActionListener(new ActionListener() { // 버튼 눌렀을때
+    		jb2[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
     		    public void actionPerformed(ActionEvent e) {
     		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
     		    	dispose();
@@ -178,9 +183,8 @@ public class level3  extends JFrame {
     	}
 
     	for(int i = 0; i < 30; i++) {
-    		int temp;
     		int value = rnd.nextInt(30);
-    		jb3[i][value].addActionListener(new ActionListener() { // 버튼 눌렀을때
+    		jb3[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
     		    public void actionPerformed(ActionEvent e) {
     		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
     		    	dispose();
@@ -225,6 +229,9 @@ public static void main(String[] args) {
 
 // 11.26
 // 버튼 사이즈 조절, 지뢰 범위 설정, 난이도별 
+
+// 11.26
+// 버튼 사이즈 조절, 지뢰 범위 설정, 난이도별 
 // 모든 난이도에 리셋버튼 추가 / 아직 작동은 안됨
 // 지뢰판 클릭했을때 사용할 액션 리스너 베이스 깔아두고 주석처리 함
 
@@ -232,3 +239,6 @@ public static void main(String[] args) {
 // 지뢰 클릭시 패널 닫고 다시 호출 기능 추가
 /* 이제 지뢰가 아닌 부분을 클릭했을때 버튼을 블럭 시키면서 숫자를 표시해주는 기능 추가
    깃발 세우는 기능만 추가 하면 일단락 할듯 */ 
+
+// 11.26
+// 게임 중 난이도 변경을 위해 메뉴바 

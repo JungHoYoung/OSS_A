@@ -15,10 +15,10 @@ public class Main_middle {
     public Main_middle(){
         mines = new int[22][22];
         Board = new char[22][22];
-        initializeMines();          //ÃÊ±âÈ­µÈ ÆÇ
-        placeMines();                //Áö·Ú¸¦ ¹«ÀÛÀ§ À§Ä¡·Î Ã¤¿ò
-        NominesOfSurroundingNeighbours(); //ÁÖº¯¿¡ Áö·Ú°¡ ÀÖ´ÂÁö ¼ıÀÚ·Î Ç¥ÇöÇØÁÜ
-        startBoard();                      //°ÔÀÓ½ÃÀÛ
+        initializeMines();          //ì´ˆê¸°í™”ëœ íŒ
+        placeMines();                //ì§€ë¢°ë¥¼ ë¬´ì‘ìœ„ ìœ„ì¹˜ë¡œ ì±„ì›€
+        NominesOfSurroundingNeighbours(); //ì£¼ë³€ì— ì§€ë¢°ê°€ ìˆëŠ”ì§€ ìˆ«ìë¡œ í‘œí˜„í•´ì¤Œ
+        startBoard();                      //ê²Œì„ì‹œì‘
   }
     
     public boolean win() {
@@ -52,10 +52,10 @@ public class Main_middle {
     		column = sc.nextInt();
     		
     	if( (Board[row][column] != '-') && ((row < 21 && row > 0) && (column < 21 && column > 0)))
-    		System.out.println("ÀÌ¹Ì ÀÔ·ÂÇÑ ÁÂÇ¥ÀÔ´Ï´Ù.");
+    		System.out.println("ì´ë¯¸ ì…ë ¥í•œ ì¢Œí‘œì…ë‹ˆë‹¤.");
     	
     	if( row < 1 || row > 22 || column < 1 || column > 22)
-    		System.out.println("1~20 »çÀÌ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+    		System.out.println("1~20 ì‚¬ì´ ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
     	
     	}while((row < 1 || row > 20 || column < 1 || column > 20) || (Board[row][column] != '-'));
     	

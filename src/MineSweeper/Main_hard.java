@@ -8,6 +8,7 @@ public class Main_hard {
     private int[][] mines;
     private char[][] Board;
     private int row, column;
+	private int num;
     Random random = new Random();
     Scanner sc = new Scanner(System.in);
 	

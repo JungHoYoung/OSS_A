@@ -43,6 +43,26 @@ public class Main_middle {
     public int getPosition(int Line, int Column) {
     	return mines[Line][Column];
     }
+	
+	public void flag(int row, int column, int num) {
+    	if(num == 2) {
+    		if(Board[row][column] == '-')
+    			Board[row][column] = '@'; //@는 깃발 표시
+    		else
+    			System.out.println("깃발을 꽂을 수 없습니다.");
+    	}
+    	num = 0;
+    }
+    
+    public void outFlag(int row, int column, int num) {
+    	if(num == 3) {
+    		if(Board[row][column] == '@')
+    			Board[row][column] = '-'; //깃발 삭제
+    		else
+    			System.out.println("깃발을 삭제할 수 없습니다.");
+    	}
+    	num = 0;
+    }
     
     public boolean readAndsetPosition() {
     	do {
@@ -50,14 +70,22 @@ public class Main_middle {
     		row = sc.nextInt();
     		System.out.print("column: ");
     		column = sc.nextInt();
+			System.out.print("1번 : 지뢰 찾기, 2번 : 깃발 꽂기, 3번 : 깃발 삭제>>");
+    		num = sc.nextInt();
     		
     	if( (Board[row][column] != '-') && ((row < 21 && row > 0) && (column < 21 && column > 0)))
     		System.out.println("이미 입력한 좌표입니다.");
     	
     	if( row < 1 || row > 22 || column < 1 || column > 22)
     		System.out.println("1~20 사이 숫자를 입력하세요.");
+			
+		if(num != 1 || num != 2)
+    		System.out.println("1,2 지뢰를 찾거나 깃발 꽂을 수 있습니다");
     	
-    	}while((row < 1 || row > 20 || column < 1 || column > 20) || (Board[row][column] != '-'));
+    	flag(row, column, num);
+    	outFlag(row, column, num);
+    	
+    	}while((row < 1 || row > 20 || column < 1 || column > 20) || (Board[row][column] != '-') || num != 2 || num != 3);
     	
     	if(getPosition(row, column) == -1 )
     		return true;

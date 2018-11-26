@@ -13,8 +13,8 @@ public class Main_hard {
 	
 
     public Main_hard(){
-        mines = new int[42][42];
-        Board = new char[42][42];
+        mines = new int[32][32];
+        Board = new char[32][32];
         initializeMines();          //초기화된 판
         placeMines();                //지뢰를 무작위 위치로 채움
         NominesOfSurroundingNeighbours(); //주변에 지뢰가 있는지 숫자로 표현해줌
@@ -23,11 +23,11 @@ public class Main_hard {
     
     public boolean win() {
     	int count = 0;
-    	for(int line = 1; line < 41; line++)
-    		for(int column = 1; column < 41; column++)
+    	for(int line = 1; line < 31; line++)
+    		for(int column = 1; column < 31; column++)
     			if(Board[line][column] == '#')
     				count++;
-    	if(count == 42)
+    	if(count == 32)
     		return true;
     	else
     		return false;
@@ -37,7 +37,7 @@ public class Main_hard {
     	for(int i = -1; i<2; i++)
     		for(int j = -1; j<2; j++)
     			if(mines[row + i][column + j] != -1)
-    				Board[row + i][column + j] = Character.forDigit(mines[row + i][column + j], 42);
+    				Board[row + i][column + j] = Character.forDigit(mines[row + i][column + j], 32);
     }
     
     public int getPosition(int Line, int Column) {
@@ -54,10 +54,10 @@ public class Main_hard {
     	if( (Board[row][column] != '-') && ((row < 41 && row > 0) && (column < 41 && column > 0)))
     		System.out.println("이미 입력한 좌표입니다.");
     	
-    	if( row < 1 || row > 42 || column < 1 || column > 42)
-    		System.out.println("1~40  사이 숫자를 입력하세요.");
+    	if( row < 1 || row > 32 || column < 1 || column > 32)
+    		System.out.println("1~30  사이 숫자를 입력하세요.");
     	
-    	}while((row < 1 || row > 40 || column < 1 || column > 40) || (Board[row][column] != '-'));
+    	}while((row < 1 || row > 30 || column < 1 || column > 30) || (Board[row][column] != '-'));
     	
     	if(getPosition(row, column) == -1 )
     		return true;
@@ -69,20 +69,20 @@ public class Main_hard {
 	public void showMain() {
 		
 		System.out.println("\n		Lines");
-		for(int Line = 40; Line > 0; Line--) {
+		for(int Line = 30; Line > 0; Line--) {
 			if(Line >= 10) {
 				System.out.print("		" + Line + "");
 			}else {
 			System.out.print("		" + Line + " ");
 			}
-			for(int Column = 1; Column < 41; Column++) {
+			for(int Column = 1; Column < 31; Column++) {
 				System.out.print(" " + Board[Line][Column] + " ");
 			}
 			
 			System.out.println();
 		}
 		System.out.print("\n  		   ");
-		for(int x = 1; x < 41; x++) {
+		for(int x = 1; x < 31; x++) {
 			if( x <=9) {
 		System.out.print(x + "  ");
 		}else {
@@ -95,8 +95,8 @@ public class Main_hard {
 		}
 	
 	public void NominesOfSurroundingNeighbours() {
-		for(int line = 1; line < 41; line++)
-			for(int column = 1; column < 41; column++) {
+		for(int line = 1; line < 31; line++)
+			for(int column = 1; column < 31; column++) {
 			
 				for(int i = -1; i <=1; i++)
 					for(int j = -1; j <= 1; j++)
@@ -107,7 +107,7 @@ public class Main_hard {
 	}
 	
 	public void revealMines() {
-		for(int i = 1; i < 41; i++)
+		for(int i = 1; i < 31; i++)
 			for(int j = 1; j < 41; j++)
 				if(mines[i][j] == -1)
 					Board[i][j] = '#';
@@ -130,10 +130,10 @@ public class Main_hard {
 	public void placeMines() {
 		boolean raffled;
 		int Line, Column;
-		for(int i = 0; i < 42; i++) {
+		for(int i = 0; i < 32; i++) {
 			do{
-				Line = random.nextInt(40) + 1;
-				Column = random.nextInt(40) + 1;
+				Line = random.nextInt(30) + 1;
+				Column = random.nextInt(30) + 1;
 				
 				if(mines[Line][Column] == -1)
 					raffled = true;

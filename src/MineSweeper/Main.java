@@ -78,7 +78,7 @@ public class Main {
     		System.out.println("row, column : 1~10 사이 숫자를 입력하세요.");
     	
     	if(num != 1 && num != 2)
-    		System.out.println("1,2 지뢰를 찾거나 깃발 꽂을 수 있습니다");
+    		System.out.println("1, 2, 3번으로 클릭, 깃발 꽂기, 깃발 삭제를 할 수 있습니다");
     	
     	flag(row, column, num);
     	outFlag(row, column, num);

@@ -16,105 +16,341 @@ public class mine extends JFrame {
 	JPanel jp = new JPanel(); // 패널 1
 	JPanel jp2 = new JPanel(); // 패널 2
 	JButton reset = new JButton(); // 리셋 버튼 설정
-	int level = 1;
 	
 	Random rnd = new Random(); // 랜덤함수
-	int[] mine = new int[100]; // 지뢰판 설정
-	
-	JButton jb[] = new JButton[100]; // 버튼 10x10 생성
+	int[][] mine = new int[10][10]; // 지뢰판 설정
+	int[][] mine2 = new int[15][15];
+	int[][] mine3 = new int[20][20];
+
+	JButton jb[][] = new JButton[10][10]; // 버튼 10x10 생성
+	JButton jb2[][] = new JButton[15][15]; // 버튼 20x20 생성
+	JButton jb3[][] = new JButton[20][20]; // 버튼 30x30 생성
 
 public mine() {
 	super("지뢰찾기"); // 타이틀
-	JMenuBar mb = new JMenuBar();
-	JMenu menu = new JMenu("파일");
+	if(level == 0) // 레벨값을 전역변수로 설정함.
+		level = 1; // 지역변수로 선언시 안먹혔음 왜 일까
+	if(level == 1) {
+		JMenuBar mb = new JMenuBar();
+		JMenu menu = new JMenu("파일");
 
-	menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
-	    public void actionPerformed(ActionEvent e) {
-	    	if(level == 1) {
-	    		dispose();
-	    		new mine();
-	    	}
-	    	else if(level == 2) {
-	    		
-	    	}
-	    	else if(level == 3) {
-	    		
-	    	}
-	    }
-	});
-	menu.addSeparator(); // 줄긋기
-	menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-	    public void actionPerformed(ActionEvent e) {
-	    	level = 1;
-	    }
-	});
-	menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-	    public void actionPerformed(ActionEvent e) {
-	    	level = 2;
-	    }
-	});
-	menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-	    public void actionPerformed(ActionEvent e) {
-	    	level = 3;
-	    }
-	});
+		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new mine();
+			}
+		});
+		menu.addSeparator(); // 줄긋기
+		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) { // 이미 레벨값이 1임
+				dispose();
+				new mine();
+			}
+		});
+		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				level = 2;
+				dispose();
+				new mine();
+			}
+		});
+		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				level = 3;
+				dispose();
+				new mine();
+			}
+		});
 	
-	menu.addSeparator(); // 메뉴바에 줄긋기
+		menu.addSeparator(); // 메뉴바에 줄긋기
 	
-	menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
-	    public void actionPerformed(ActionEvent e) {
-	    	System.exit(0);
+		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
 	    	// 우리는 하나의 프레임만 쓰기 때문에 dispose()만 해도 실행프로그램이 백그라운드에 남아 있지 않지만
 	    	// 여러개의 프레임이 필요해지는 경우에는 이 명령어를 사용할 것
-	    }
-	});
-	mb.add(menu); // 메뉴바에 메뉴를 add
+			}
+		});
+		mb.add(menu); // 메뉴바에 메뉴를 add
 	
-	this.setJMenuBar(mb);
+		this.setJMenuBar(mb);
 	
-	this.setLayout(new BorderLayout());
-	add(jp);
-	add(jp2, "North");
-	jp2.add(reset); // 패널에 리셋 버튼 추가
-	
-	reset.setText("리셋"); // 리셋 버튼 텍스트 설정
-	reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
-	reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
-	    public void actionPerformed(ActionEvent e) {
-	    	JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
-	    }
-	});
+		this.setLayout(new BorderLayout());
+		add(jp);
+		add(jp2, "North");
+		jp2.add(reset); // 패널에 리셋 버튼 추가
+		
+		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
+		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
+		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
+				dispose();
+				new mine();
+			}
+		});
 
-	for(int count=0; count < 10; ) {
-		int setMine = rnd.nextInt(100); // 0과 1 랜덤값 생성
-		if(mine[setMine] != 1) { // 해당 배열위치가 1이 아닐경우 (중복 방지)
-			mine[setMine] = 1; // 해당 배열값을 1로 설정
-			count++; // 지뢰 배치후 카운트값 1증가
+		for(; ; ) {
+			for(int i, j, count = 0; count < 10;) {
+				i=rnd.nextInt(10);
+				j=rnd.nextInt(10);
+				if(mine[i][j] != 1) {
+					mine[i][j] = 1;
+					count++;
+				}
+			}
+			break;
 		}
+	
+		for(int i = 0; i < 10; i++) { // 버튼배열 생성
+			for(int j = 0; j < 10; j++) {
+			if(mine[i][j] == 0) { // mine배열 i위치가 0일경우
+				jb[i][j] = new JButton();
+				jb[i][j].setPreferredSize(new Dimension(20,20));
+				jb[i][j].addActionListener(new ButtonListener()); // 버튼 리스너 생성
+    	
+				jp.add(jb[i][j]);
+			}
+			else if(mine[i][j] != 0) { // mine배열 i위치가 0이 아닐경우
+				jb[i][j] = new JButton();
+				jb[i][j].setPreferredSize(new Dimension(20,20));
+				jb[i][j].addActionListener(new MineListener()); // 마인 리스너 생성
+				jb[i][j].setText("1"); /////////////////////////////////////// 구분하기 위해 설정함. 마지막에 지울것
+				jp.add(jb[i][j]);
+				
+			}
+			}
+		}
+		setVisible(true); // 프레임 보이기
+		setSize(280, 360); // 프레임 사이즈 설정
+		setResizable(false); // 창 사이즈 변경 불가
+		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
 	}
 	
-	for(int i = 0; i < 100; i++) { // 버튼배열 생성
-		if(mine[i] == 0) { // mine배열 i위치가 0일경우
-			jb[i] = new JButton();
-			jb[i].setPreferredSize(new Dimension(20,20));
-			jb[i].addActionListener(new ButtonListener()); // 버튼 리스너 생성
-    	
-			jp.add(jb[i]);
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+	
+	if(level == 2) {
+		setResizable(true); // 창 사이즈 변경 불가
+		JMenuBar mb = new JMenuBar();
+		JMenu menu = new JMenu("파일");
+
+		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new mine();
+			}
+		});
+		menu.addSeparator(); // 줄긋기
+		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				level = 1;
+				dispose();
+				new mine();
+			}
+		});
+		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) { // 이미 레벨값이 2임
+				dispose();
+				new mine();
+			}
+		});
+		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				level = 3;
+				dispose();
+				new mine();
+			}
+		});
+	
+		menu.addSeparator(); // 메뉴바에 줄긋기
+	
+		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+	    	// 우리는 하나의 프레임만 쓰기 때문에 dispose()만 해도 실행프로그램이 백그라운드에 남아 있지 않지만
+	    	// 여러개의 프레임이 필요해지는 경우에는 이 명령어를 사용할 것
+			}
+		});
+		mb.add(menu); // 메뉴바에 메뉴를 add
+	
+		this.setJMenuBar(mb);
+	
+		this.setLayout(new BorderLayout());
+		add(jp);
+		add(jp2, "North");
+		jp2.add(reset); // 패널에 리셋 버튼 추가
+		
+		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
+		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
+		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
+				dispose();
+				new mine();
+			}
+		});
+
+		for(; ; ) {
+			for(int i, j, count = 0; count < 30;) {
+				i=rnd.nextInt(15);
+				j=rnd.nextInt(15);
+				if(mine2[i][j] != 1) {
+					mine2[i][j] = 1;
+					count++;
+				}
+			}
+			break;
 		}
-		else if(mine[i] != 0) { // mine배열 i위치가 0이 아닐경우
-			jb[i] = new JButton();
-			jb[i].setPreferredSize(new Dimension(20,20));
-			jb[i].addActionListener(new MineListener()); // 마인 리스너 생성
-			jb[i].setText("1"); /////////////////////////////////////// 구분하기 위해 설정함. 마지막에 지울것
-			jp.add(jb[i]);
-			
+	
+		for(int i = 0; i < 15; i++) { // 버튼배열 생성
+			for(int j = 0; j < 15; j++) {
+			if(mine2[i][j] == 0) { // mine배열 i위치가 0일경우
+				jb2[i][j] = new JButton();
+				jb2[i][j].setPreferredSize(new Dimension(20,20));
+				jb2[i][j].addActionListener(new ButtonListener()); // 버튼 리스너 생성
+    	
+				jp.add(jb2[i][j]);
+			}
+			else if(mine2[i][j] != 0) { // mine배열 i위치가 0이 아닐경우
+				jb2[i][j] = new JButton();
+				jb2[i][j].setPreferredSize(new Dimension(20,20));
+				jb2[i][j].addActionListener(new MineListener()); // 마인 리스너 생성
+				jb2[i][j].setText("1"); /////////////////////////////////////// 구분하기 위해 설정함. 마지막에 지울것
+				jp.add(jb2[i][j]);
+				
+			}
+			}
+		}
+		setVisible(true); // 프레임 보이기
+		setSize(400, 490); // 프레임 사이즈 설정
+		setResizable(false); // 창 사이즈 변경 불가
+		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+	}
+	
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///★★★★★★★★★★★★★★★///
+
+	if(level == 3) {
+		JMenuBar mb = new JMenuBar();
+		JMenu menu = new JMenu("파일");
+
+		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
+			public void actionPerformed(ActionEvent e) {
+					dispose();
+					new mine();
+			}
+		});
+		menu.addSeparator(); // 줄긋기
+		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				level = 1;
+				dispose();
+				new mine();
+			}
+		});
+		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				level = 2;
+				dispose();
+				new mine();
+			}
+		});
+		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+			public void actionPerformed(ActionEvent e) { // 이미 레벨값이 3임
+				dispose();
+				new mine();
+			}
+		});
+	
+		menu.addSeparator(); // 메뉴바에 줄긋기
+	
+		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+	    	// 우리는 하나의 프레임만 쓰기 때문에 dispose()만 해도 실행프로그램이 백그라운드에 남아 있지 않지만
+	    	// 여러개의 프레임이 필요해지는 경우에는 이 명령어를 사용할 것
+			}
+		});
+		mb.add(menu); // 메뉴바에 메뉴를 add
+	
+		this.setJMenuBar(mb);
+	
+		this.setLayout(new BorderLayout());
+		add(jp);
+		add(jp2, "North");
+		jp2.add(reset); // 패널에 리셋 버튼 추가
+		
+		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
+		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
+		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
+					dispose();
+					new mine();
+			}
+		});
+
+		for(; ; ) {
+			for(int i, j, count = 0; count < 40;) {
+				i=rnd.nextInt(20);
+				j=rnd.nextInt(20);
+				if(mine3[i][j] != 1) {
+					mine3[i][j] = 1;
+					count++;
+				}
+			}
+			break;
+		}
+	
+		for(int i = 0; i < 20; i++) { // 버튼배열 생성
+			for(int j = 0; j < 20; j++) {
+			if(mine3[i][j] == 0) { // mine배열 i,j 위치의 값이 0일경우
+				jb3[i][j] = new JButton();
+				jb3[i][j].setPreferredSize(new Dimension(20,20));
+				jb3[i][j].addActionListener(new ButtonListener()); // 버튼 리스너 생성
+				jp.add(jb3[i][j]);
+			}
+			else if(mine3[i][j] != 0) { // mine배열 i,j 위치의 값이 0이 아닐경우
+				jb3[i][j] = new JButton();
+				jb3[i][j].setPreferredSize(new Dimension(20,20));
+				jb3[i][j].addActionListener(new MineListener()); // 마인 리스너 생성
+				jb3[i][j].setText("1"); /////////////////////////////////////// 구분하기 위해 설정함. 마지막에 지울것
+				jp.add(jb3[i][j]);
+			}
 		}
 	}
-	setVisible(true); // 프레임 보이기
-	setSize(280, 360); // 프레임 사이즈 설정
-	setResizable(false); // 창 사이즈 변경 불가
-	this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+		
+		setVisible(true); // 프레임 보이기
+		setSize(520, 610); // 프레임 사이즈 설정
+		setResizable(false); // 창 사이즈 변경 불가
+		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+	}
+
+
+
 }
 
 private class ButtonListener implements ActionListener  { 
@@ -132,7 +368,7 @@ private class MineListener implements ActionListener  {
 public static void main(String[] args) {
 	// TODO Auto-generated method stub
 	new mine(); // 프레임 불러오기
-	}
+	}static int level = 0;
 }
 // 11.26
 // 버튼 사이즈 조절, 지뢰 범위 설정, 난이도별 
@@ -160,3 +396,8 @@ public static void main(String[] args) {
 // 전면 수정
 // 지뢰인 버튼과 일반 버튼의 리스너를 별도 설정
 // 메뉴바에 있는 아이템 리스너 설정 및 일반 버튼 클릭시 이벤트만 설정하면 마무리될듯
+
+// 11.28
+// 메뉴아이템 리스너 설정 끝남.
+// 버튼 배열 생성이 30x30이 안되고 23x20에서 자꾸 멈춰서 10, 15, 20 으로 변경
+// 자꾸 이상해서 지금 백업 하나 

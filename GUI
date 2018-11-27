@@ -1,6 +1,8 @@
-package oss_a;
+package oss_mine;
 
 import javax.swing.*;
+import javax.swing.event.MenuListener;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -11,105 +13,110 @@ import java.util.*;
 
 
 public class mine extends JFrame {
-	JButton b1 = new JButton("1"); // 레벨 선택 버튼
-	JButton b2 = new JButton("2"); // 레벨 선택 버튼
-	JButton b3 = new JButton("3"); // 레벨 선택 버튼
 	JPanel jp = new JPanel(); // 패널 1
 	JPanel jp2 = new JPanel(); // 패널 2
-	JLabel jl = new JLabel("난이도 선택"); // 레이블 텍스트 설정
 	JButton reset = new JButton(); // 리셋 버튼 설정
+	int level = 1;
+	
+	Random rnd = new Random(); // 랜덤함수
+	int[][] mine = new int[10][10]; // 지뢰판 설정
 
 public mine() {
 	super("지뢰찾기"); // 타이틀
+	JMenuBar mb = new JMenuBar();
+	JMenu menu = new JMenu("파일");
+
+	menu.add(new JMenuItem("다시하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
+	    public void actionPerformed(ActionEvent e) {
+	    	if(level == 1) {
+	    		dispose();
+	    	}
+	    	else if(level == 2) {
+	    		
+	    	}
+	    	else if(level == 3) {
+	    		
+	    	}
+	    }
+	});
+	menu.addSeparator(); // 줄긋기
+	menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+	    public void actionPerformed(ActionEvent e) {
+	    	level = 1;
+	    }
+	});
+	menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+	    public void actionPerformed(ActionEvent e) {
+	    	level = 2;
+	    }
+	});
+	menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+	    public void actionPerformed(ActionEvent e) {
+	    	level = 3;
+	    }
+	});
 	
-	jp.add(jl); 
+	menu.addSeparator(); // 메뉴바에 줄긋기
+	
+	menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
+	    public void actionPerformed(ActionEvent e) {
+	    	System.exit(0);
+	    	// 우리는 하나의 프레임만 쓰기 때문에 dispose()만 해도 실행프로그램이 백그라운드에 남아 있지 않지만
+	    	// 여러개의 프레임이 필요해지는 경우에는 이 명령어를 사용할 것
+	    }
+	});
+	mb.add(menu); // 메뉴바에 메뉴를 add
+	
+	this.setJMenuBar(mb);
+	
 	this.setLayout(new BorderLayout());
-	jp2.add(b1);
-	jp2.add(b2);
-	jp2.add(b3);
-	add(jp, "North");
-	add(jp2);
+	add(jp);
+	add(jp2, "North");
+	jp2.add(reset); // 패널에 리셋 버튼 추가
 	
-	b1.addActionListener(new ActionListener() {
+	reset.setText("리셋"); // 리셋 버튼 텍스트 설정
+	reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
+	reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
 	    public void actionPerformed(ActionEvent e) {
-	    	dispose();
-	    	new level1();
+	    	JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
 	    }
 	});
-	b2.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-	    	dispose();
-	    	new level2();
-	    }
-	});
-	b3.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-	    	dispose();
-	    	new level3();
-	    }
-	});
+	
+	JButton jb[][] = new JButton[10][10]; // 버튼 10x10 생성
+	for(int i = 0; i < 10; i++) {
+		for(int j = 0; j < 10; j++) {
+    		jb[i][j] = new JButton();
+    		jb[i][j].setPreferredSize(new Dimension(20,20));
+    		jb[i][j].addActionListener(new ButtonListener());
+    		jp.add(jb[i][j]);
+		}
+	}
+	for(int i = 0; i < 10; i++) { // 지뢰 위치를 정수형 변수[] mine에 담아 저장
+		int value = rnd.nextInt(10);
+		jb[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
+		    public void actionPerformed(ActionEvent e) {
+		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
+		    	dispose();
+		    	new mine();
+		    }
+		});
+	}
 	
 	setVisible(true); // 프레임 보이기
+	setSize(280, 360); // 프레임 사이즈 설정
 	setResizable(false); // 창 사이즈 변경 불가
-	setSize(200, 200); // 프레임 사이즈 설정
 	this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
 }
 
-public class level1  extends JFrame {
-	JPanel jp = new JPanel(); // 패널 1
-	public level1() {
-		super("초급 단계"); // 타이틀
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("메뉴");
-		menu.add(new JMenuItem("새로운 시작"));
-		menu.add(new JMenuItem("리셋"));
-		
-		menuBar.add(menu);
-		this.setJMenuBar(menuBar);
-		
-		
-		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
-		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
-		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
-		    public void actionPerformed(ActionEvent e) {
-		    	JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
-		    }
-		});
-		jp.add(reset); // 패널에 리셋 버튼 추가
-		Random rnd = new Random(); // 랜덤함수
-		int[][] mine = new int[10][10]; // 지뢰판 설정
-		this.setLayout(new BorderLayout()); // 레이아웃 설정
-		
-		JButton jb[][] = new JButton[10][10]; // 버튼 10x10 생성
-    	for(int i = 0; i < 10; i++) {
-    		for(int j = 0; j < 10; j++) {
-        		jb[i][j] = new JButton();
-        		jb[i][j].setPreferredSize(new Dimension(20,20));
-        		jp.add(jb[i][j]);
-    		}
-    	}
-    	for(int i = 0; i < 10; i++) { // 지뢰 위치를 정수형 변수[] mine에 담아 저장
-    		int value = rnd.nextInt(10);
-    		jb[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
-    		    public void actionPerformed(ActionEvent e) {
-    		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
-    		    	dispose();
-    		    	new level1();
-    		    }
-    		});
-    	}
-    	add(jp);
-		
-		setVisible(true); // 프레임 보이기
-		setResizable(false); // 창 사이즈 변경 불가
-		setSize(260 , 300); // 프레임 사이즈 설정
-		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+private class ButtonListener implements ActionListener  { 
+	public void actionPerformed(ActionEvent e) { // 액션 이벤트 처리
+		if(e.getSource() == button) { // getSource() : 이벤트 소스를 반환하는 메서드
+			button.setText("버튼이 눌러졌습니다.");
 		}
+	}
 }
-
-
+/*
 public class level2  extends JFrame {
 	JPanel jp = new JPanel(); // 패널 1
 	
@@ -149,8 +156,8 @@ public class level2  extends JFrame {
     	add(jp);
 		
 		setVisible(true); // 프레임 보이기
-		setResizable(false); // 창 사이즈 변경 불가
 		setSize(510, 560); // 프레임 사이즈 설정
+		setResizable(false); // 창 사이즈 변경 불가
 		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
 	}
@@ -195,33 +202,19 @@ public class level3  extends JFrame {
     	add(jp);
 		
 		setVisible(true); // 프레임 보이기
-		setResizable(false); // 창 사이즈 변경 불가
 		setSize(760, 820); // 프레임 사이즈 설정
+		setResizable(false); // 창 사이즈 변경 불가
 		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
 	}
 }
-
-/* 액션 리스너
-class MyActionListener implements ActionListener {
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		JButton reset = (JButton)e.getSource();
-		if(reset.getText().equals("리셋")) {
-			
-		}
-			
-			
-	}
-	
-}
 */
+
+
 public static void main(String[] args) {
 	// TODO Auto-generated method stub
 	new mine(); // 프레임 불러오기
-}
+	}
 }
 
 // 11.26
@@ -241,4 +234,7 @@ public static void main(String[] args) {
    깃발 세우는 기능만 추가 하면 일단락 할듯 */ 
 
 // 11.26
-// 게임 중 난이도 변경을 위해 메뉴바 
+// 게임 중 난이도 변경을 위해 메뉴바 생성 [작동은 안됨]
+
+// 11.27
+// 메뉴바 기능 및 난이도 선택 기능 추가중

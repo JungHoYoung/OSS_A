@@ -19,17 +19,20 @@ public class mine extends JFrame {
 	int level = 1;
 	
 	Random rnd = new Random(); // 랜덤함수
-	int[][] mine = new int[10][10]; // 지뢰판 설정
+	int[] mine = new int[100]; // 지뢰판 설정
+	
+	JButton jb[] = new JButton[100]; // 버튼 10x10 생성
 
 public mine() {
 	super("지뢰찾기"); // 타이틀
 	JMenuBar mb = new JMenuBar();
 	JMenu menu = new JMenu("파일");
 
-	menu.add(new JMenuItem("다시하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
+	menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
 	    public void actionPerformed(ActionEvent e) {
 	    	if(level == 1) {
 	    		dispose();
+	    		new mine();
 	    	}
 	    	else if(level == 2) {
 	    		
@@ -81,27 +84,32 @@ public mine() {
 	    	JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
 	    }
 	});
-	
-	JButton jb[][] = new JButton[10][10]; // 버튼 10x10 생성
-	for(int i = 0; i < 10; i++) {
-		for(int j = 0; j < 10; j++) {
-    		jb[i][j] = new JButton();
-    		jb[i][j].setPreferredSize(new Dimension(20,20));
-    		jb[i][j].addActionListener(new ButtonListener());
-    		jp.add(jb[i][j]);
+
+	for(int count=0; count < 10; ) {
+		int setMine = rnd.nextInt(100); // 0과 1 랜덤값 생성
+		if(mine[setMine] != 1) { // 해당 배열위치가 1이 아닐경우 (중복 방지)
+			mine[setMine] = 1; // 해당 배열값을 1로 설정
+			count++; // 지뢰 배치후 카운트값 1증가
 		}
 	}
-	for(int i = 0; i < 10; i++) { // 지뢰 위치를 정수형 변수[] mine에 담아 저장
-		int value = rnd.nextInt(10);
-		jb[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
-		    public void actionPerformed(ActionEvent e) {
-		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
-		    	dispose();
-		    	new mine();
-		    }
-		});
-	}
 	
+	for(int i = 0; i < 100; i++) { // 버튼배열 생성
+		if(mine[i] == 0) { // mine배열 i위치가 0일경우
+			jb[i] = new JButton();
+			jb[i].setPreferredSize(new Dimension(20,20));
+			jb[i].addActionListener(new ButtonListener()); // 버튼 리스너 생성
+    	
+			jp.add(jb[i]);
+		}
+		else if(mine[i] != 0) { // mine배열 i위치가 0이 아닐경우
+			jb[i] = new JButton();
+			jb[i].setPreferredSize(new Dimension(20,20));
+			jb[i].addActionListener(new MineListener()); // 마인 리스너 생성
+			jb[i].setText("1"); /////////////////////////////////////// 구분하기 위해 설정함. 마지막에 지울것
+			jp.add(jb[i]);
+			
+		}
+	}
 	setVisible(true); // 프레임 보이기
 	setSize(280, 360); // 프레임 사이즈 설정
 	setResizable(false); // 창 사이즈 변경 불가
@@ -110,113 +118,22 @@ public mine() {
 }
 
 private class ButtonListener implements ActionListener  { 
-	public void actionPerformed(ActionEvent e) { // 액션 이벤트 처리
-		if(e.getSource() == button) { // getSource() : 이벤트 소스를 반환하는 메서드
-			button.setText("버튼이 눌러졌습니다.");
-		}
-	}
-}
-/*
-public class level2  extends JFrame {
-	JPanel jp = new JPanel(); // 패널 1
-	
-	public level2() {
-		super("중급 단계"); // 타이틀
-		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
-		reset.setPreferredSize(new Dimension(510, 30)); // 리셋버튼 사이즈 조정
-		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
-		    public void actionPerformed(ActionEvent e) {
-		    	JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
-		    }
-		});
-		jp.add(reset); // 패널에 리셋 버튼 추가
+	public void actionPerformed(ActionEvent e) {
 		
-		Random rnd = new Random();
-		
-		this.setLayout(new BorderLayout()); // 레이아웃 설정
-		
-		JButton jb2[][] = new JButton[20][20];
-		for(int i = 0; i < 20; i++) {	
-    		for(int j = 0; j < 20; j++) {
-        		jb2[i][j] = new JButton();
-        		jb2[i][j].setPreferredSize(new Dimension(20,20));
-        		jp.add(jb2[i][j]);
-    		}
-    	}
-    	for(int i = 0; i < 20; i++) {
-    		int value = rnd.nextInt(20);
-    		jb2[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
-    		    public void actionPerformed(ActionEvent e) {
-    		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
-    		    	dispose();
-    		    	new level2();
-    		    }
-    		});
-    	}
-    	add(jp);
-		
-		setVisible(true); // 프레임 보이기
-		setSize(510, 560); // 프레임 사이즈 설정
-		setResizable(false); // 창 사이즈 변경 불가
-		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
 	}
 }
 
-public class level3  extends JFrame {
-	JPanel jp = new JPanel(); // 패널 1
-	
-	public level3() {
-		super("고급 단계"); // 타이틀
-		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
-		reset.setPreferredSize(new Dimension(760, 30)); // 리셋버튼 사이즈 조정
-		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
-		    public void actionPerformed(ActionEvent e) {
-		    	JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
-		    }
-		});
-		jp.add(reset); // 패널에 리셋 버튼 추가
-		Random rnd = new Random();
-		
-		this.setLayout(new BorderLayout()); // 레이아웃 설정
-		
-		JButton jb3[][] = new JButton[30][30];
-		for(int i = 0; i < 30; i++) {	
-    		for(int j = 0; j < 30; j++) {
-        		jb3[i][j] = new JButton();
-        		jb3[i][j].setPreferredSize(new Dimension(20,20));
-        		jp.add(jb3[i][j]);
-    		}
-    	}
-
-    	for(int i = 0; i < 30; i++) {
-    		int value = rnd.nextInt(30);
-    		jb3[i][value].addActionListener(new ActionListener() { // 지뢰 버튼 눌렀을때
-    		    public void actionPerformed(ActionEvent e) {
-    		    	JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
-    		    	dispose();
-    		    	new level3();
-    		    }
-    		});
-    	}
-    	add(jp);
-		
-		setVisible(true); // 프레임 보이기
-		setSize(760, 820); // 프레임 사이즈 설정
-		setResizable(false); // 창 사이즈 변경 불가
-		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+private class MineListener implements ActionListener  { 
+	public void actionPerformed(ActionEvent e) {
+		JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
 	}
 }
-*/
-
 
 public static void main(String[] args) {
 	// TODO Auto-generated method stub
 	new mine(); // 프레임 불러오기
 	}
 }
-
 // 11.26
 // 버튼 사이즈 조절, 지뢰 범위 설정, 난이도별 
 
@@ -238,3 +155,8 @@ public static void main(String[] args) {
 
 // 11.27
 // 메뉴바 기능 및 난이도 선택 기능 추가중
+
+// 11.27
+// 전면 수정
+// 지뢰인 버튼과 일반 버튼의 리스너를 별도 설정
+// 메뉴바에 있는 아이템 리스너 설정 및 일반 버튼 클릭시 이벤트만 설정하면 마무리될듯

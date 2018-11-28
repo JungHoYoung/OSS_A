@@ -422,7 +422,7 @@ public static void main(String[] args) {
 
 
 // 11.28
-// 백업
+// 백업 // 2
 /*
 package oss_a;
 
@@ -521,7 +521,7 @@ public mine() {
 				i=rnd.nextInt(10);
 				j=rnd.nextInt(10);
 				if(mine[i][j] != 1) {
-					mine[i][j] = 1;
+					mine[i][j] = -1;
 					count++;
 				}
 			}
@@ -545,6 +545,21 @@ public mine() {
 				jp.add(jb[i][j]);
 				
 			}
+			}
+		}
+		
+		for(int i=0; i<10; i++) {
+			for(int j=0; j<10; j++) {
+				if(mine[i][j] != 0) {
+					for(int n = -1; n <= 1; n++) {
+						for(int m = -1; m <= 1; m++) {
+							if(mine[i][j] != -1) {
+								if(mine[i+n][j+m] == -1)
+									mine[i][j]++;
+							}
+						}
+					}
+				}
 			}
 		}
 		
@@ -755,19 +770,11 @@ private class ButtonListener implements ActionListener  {
 	public void actionPerformed(ActionEvent e) {
 		int temp = 0;
 		if(level == 1) {
-			for(int i = 1; i < 9; i++) {
-				for(int j = 1; j < 9; j++) {
+			for(int i = 0; i < 10; i++) {
+				for(int j = 0; j < 10; j++) {
 					if(e.getSource() == jb[i][j]) {
-						for(int n = -1; n <= 1; n++) {
-							for(int m = -1; m <= 1; m++) {
-								if(mine[i+n][j+m] != 0) {
-									temp++;
-								}
-								jb[i][j].setText("" + temp);
-								jb[i][j].setEnabled(false);
-								temp=0;
-							}
-						}
+						jb[i][j].setText("" + mine[i][j]);
+						jb[i][j].setEnabled(false);
 					}
 				}
 			}
@@ -786,5 +793,4 @@ public static void main(String[] args) {
 	new mine(); // 프레임 불러오기
 	}static int level = 0;
 }
-
 */

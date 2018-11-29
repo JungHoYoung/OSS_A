@@ -1,5 +1,6 @@
 package oss_mine;
 
+import javax.print.DocFlavor.URL;
 import javax.swing.*;
 import javax.swing.event.MenuListener;
 import java.awt.color.*;
@@ -21,7 +22,17 @@ public class mine extends JFrame {
 	JMenuBar	 mb 	=	new JMenuBar();
 	JMenu 		menu 	=	new JMenu("파일");
 	JLabel[]	lbl		=	new JLabel[10];
-	
+	ImageIcon icon0 = new ImageIcon("images/mine0.png");
+	ImageIcon icon1 = new ImageIcon("images/mine1.png");
+	ImageIcon icon2 = new ImageIcon("images/mine2.png");
+	ImageIcon icon3 = new ImageIcon("images/mine3.png");
+	ImageIcon icon4 = new ImageIcon("images/mine4.png");
+	ImageIcon icon5 = new ImageIcon("images/mine5.png");
+	ImageIcon icon6 = new ImageIcon("images/mine6.png");
+	ImageIcon icon7 = new ImageIcon("images/mine7.png");
+	ImageIcon icon8 = new ImageIcon("images/mine8.png");
+	ImageIcon icon9 = new ImageIcon("images/mine9.png");
+	ImageIcon icon_mine = new ImageIcon("images/mine.png");
 	
 	
 
@@ -423,8 +434,9 @@ private class MineListener implements ActionListener  { // 지뢰 클릭
 			for(int i = 0; i < 10; i++) {
 				for(int j = 0; j < 10; j++) {
 					if(mine[i][j] == -1)
-						jb[i][j].setBackground(Color.RED);
+						jb[i][j].setIcon(icon_mine);
 					jb[i][j].setEnabled(false);
+					
 				}
 			}
 		}
@@ -432,7 +444,7 @@ private class MineListener implements ActionListener  { // 지뢰 클릭
 			for(int i = 0; i < 15; i++) {
 				for(int j = 0; j < 15; j++) {
 					if(mine2[i][j] == -1)
-						jb2[i][j].setBackground(Color.RED);
+						jb2[i][j].setIcon(icon_mine);
 					jb2[i][j].setEnabled(false);
 				}
 			}
@@ -441,7 +453,7 @@ private class MineListener implements ActionListener  { // 지뢰 클릭
 			for(int i = 0; i < 20; i++) {
 				for(int j = 0; j < 20; j++) {
 					if(mine3[i][j] == -1)
-						jb3[i][j].setBackground(Color.RED);
+						jb3[i][j].setIcon(icon_mine);
 					jb3[i][j].setEnabled(false);
 				}
 			}
@@ -453,7 +465,7 @@ private void check(int i, int j) {
 	if(level == 1) {
 		try {
 			if(mine[i][j] == 0 && jb[i][j].isEnabled() == true) {
-				jb[i][j].setText(""+mine[i][j]);
+				jb[i][j].setIcon(icon0);
 				jb[i][j].setEnabled(false);
 				check(i+1, j);
 				check(i-1, j);
@@ -466,7 +478,36 @@ private void check(int i, int j) {
 			}
 			else {
 				if(jb[i][j].isEnabled() == true) {
-					jb[i][j].setEnabled(false);
+					jb[i][j].setText(""+mine[i][j]);
+					switch(mine[i][j]) {
+					case 1:
+						jb[i][j].setIcon(icon1);
+						break;
+					case 2:
+						jb[i][j].setIcon(icon2);
+						break;
+					case 3:
+						jb[i][j].setIcon(icon3);
+						break;
+					case 4:
+						jb[i][j].setIcon(icon4);
+						break;
+					case 5:
+						jb[i][j].setIcon(icon5);
+						break;
+					case 6:
+						jb[i][j].setIcon(icon6);
+						break;
+					case 7:
+						jb[i][j].setIcon(icon7);
+						break;
+					case 8:
+						jb[i][j].setIcon(icon8);
+						break;
+					case 9:
+						jb[i][j].setIcon(icon9);
+						break;
+					}
 				}
 			}
 		}
@@ -477,7 +518,7 @@ private void check(int i, int j) {
 	if(level == 2) {
 		try {
 			if(mine2[i][j] == 0 && jb2[i][j].isEnabled() == true) {
-				jb2[i][j].setText(""+mine2[i][j]);
+				jb2[i][j].setIcon(icon0);
 				jb2[i][j].setEnabled(false);
 				check(i+1, j);
 				check(i-1, j);
@@ -502,7 +543,7 @@ private void check(int i, int j) {
 	if(level == 3) {
 		try {
 			if(mine3[i][j] == 0 && jb3[i][j].isEnabled() == true) {
-				jb3[i][j].setText(""+mine3[i][j]);
+				jb3[i][j].setIcon(icon0);
 				jb3[i][j].setEnabled(false);
 				check(i+1, j);
 				check(i-1, j);
@@ -517,6 +558,35 @@ private void check(int i, int j) {
 				if(jb3[i][j].isEnabled() == true) {
 					jb3[i][j].setText(""+mine3[i][j]);
 					jb3[i][j].setEnabled(false);
+					switch(mine[i][j]) {
+					case 1:
+						jb3[i][j].setIcon(icon1);
+						break;
+					case 2:
+						jb3[i][j].setIcon(icon2);
+						break;
+					case 3:
+						jb3[i][j].setIcon(icon3);
+						break;
+					case 4:
+						jb3[i][j].setIcon(icon4);
+						break;
+					case 5:
+						jb3[i][j].setIcon(icon5);
+						break;
+					case 6:
+						jb3[i][j].setIcon(icon6);
+						break;
+					case 7:
+						jb3[i][j].setIcon(icon7);
+						break;
+					case 8:
+						jb3[i][j].setIcon(icon8);
+						break;
+					case 9:
+						jb3[i][j].setIcon(icon9);
+						break;
+					}
 				}
 			}
 		}
@@ -577,3 +647,9 @@ public static void main(String[] args) {
  
  // 11.29
  // 다 끝나감
+ 
+ // 11.29
+ // 버튼 클릭시 나오는 숫자를 이미지로 변경함
+ // 지뢰 클릭시 모든 지뢰 표시도 이미지로 변경함
+ // 이미지 사이즈 조절만 따로 해주면 되고, 리셋버튼만들고
+ // 시간 여유가 되면 깃발 표시까지 추가하고 안되면 어쩔수 

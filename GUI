@@ -1,6 +1,5 @@
 package oss_mine;
 
-import javax.print.DocFlavor.URL;
 import javax.swing.*;
 import javax.swing.event.MenuListener;
 import java.awt.color.*;
@@ -8,166 +7,181 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class mine extends JFrame {
-	JPanel 		jp 		=	new JPanel(); // 패널 1
-	JPanel 		jp2		=	new JPanel(); // 패널 2
-	JButton 	reset	=	new JButton(); // 리셋 버튼 설정
-	Random 		rnd 	=	new Random(); // 랜덤함수
-	int[][] 	mine 	=	new int[10][10]; // 지뢰판 설정
-	int[][] 	mine2 	=	new int[15][15];
-	int[][]	 	mine3 	=	new int[20][20];
-	JButton 	jb[][] 	=	new JButton[10][10]; // 버튼 10x10 생성
-	JButton 	jb2[][] = 	new JButton[15][15]; // 버튼 20x20 생성
-	JButton     jb3[][]	= 	new JButton[20][20]; // 버튼 30x30 생성
-	JMenuBar	 mb 	=	new JMenuBar();
-	JMenu 		menu 	=	new JMenu("파일");
-	JLabel[]	lbl		=	new JLabel[10];
-	ImageIcon icon0 = new ImageIcon("images/mine0.png");
-	ImageIcon icon1 = new ImageIcon("images/mine1.png");
-	ImageIcon icon2 = new ImageIcon("images/mine2.png");
-	ImageIcon icon3 = new ImageIcon("images/mine3.png");
-	ImageIcon icon4 = new ImageIcon("images/mine4.png");
-	ImageIcon icon5 = new ImageIcon("images/mine5.png");
-	ImageIcon icon6 = new ImageIcon("images/mine6.png");
-	ImageIcon icon7 = new ImageIcon("images/mine7.png");
-	ImageIcon icon8 = new ImageIcon("images/mine8.png");
-	ImageIcon icon9 = new ImageIcon("images/mine9.png");
-	ImageIcon icon_mine = new ImageIcon("images/mine.png");
-	
+public class mine extends JFrame {									// 	JFrame 상속 *이 클래스 자체가 JFrame라고 생각하면 될듯?
+	JPanel 		jp 		=	new JPanel();							//  지뢰판을 설정하기 위한 패널 생성
+	JPanel 		jp2		=	new JPanel();							//  리셋버튼을 설정하기 위한 패널 생성
+	JButton 	reset	=	new JButton();							//  리셋 버튼 생성
+	Random 		rnd 	=	new Random();							//  지뢰 배치를 위한 랜덤함수 생성
+	int[][] 	mine 	=	new int[10][10];						// 	초급 난이도에서 지뢰를 담을 10x10 배열 생성
+	int[][] 	mine2 	=	new int[15][15];						// 	중급 난이도에서 지뢰를 담을 15x15 배열 생성
+	int[][]	 	mine3 	=	new int[20][20];						// 	고급 난이도에서 지뢰를 담을 20x20 배열 생성						
+	JButton 	jb[][] 	=	new JButton[10][10];					// 	초급 난이도에 쓰일 10x10 버튼 생성
+	JButton 	jb2[][] = 	new JButton[15][15];					// 	중급 난이도에 쓰일 15x15 버튼 생성
+	JButton     jb3[][]	= 	new JButton[20][20];					// 	고급 난이도에 쓰일 20x20 버튼 생성
+	JMenuBar	 mb 	=	new JMenuBar();							//	메뉴바 생성
+	JMenu 		menu 	=	new JMenu("파일");						//	메뉴바에 '파일'이라는 항목 생성
+	ImageIcon icon0 = new ImageIcon("images/mine0.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon1 = new ImageIcon("images/mine1.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon2 = new ImageIcon("images/mine2.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon3 = new ImageIcon("images/mine3.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon4 = new ImageIcon("images/mine4.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon5 = new ImageIcon("images/mine5.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon6 = new ImageIcon("images/mine6.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon7 = new ImageIcon("images/mine7.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon8 = new ImageIcon("images/mine8.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon9 = new ImageIcon("images/mine9.png");			//	숫자 표시 할 이미지 설정
+	ImageIcon icon_mine = new ImageIcon("images/mine.png");			//	지뢰 표시 할 이미지 설정
+	ImageIcon icon_reset = new ImageIcon("images/reset.png");		//  리셋 표기 할 이미지 설정
+	ImageIcon logo = new ImageIcon("images/logo.png");				//  파일 로고 변경 할 이미지 설정
 	
 
 public mine() {
-	super("지뢰찾기"); // 타이틀
-	if(level == 0) // 레벨값을 전역변수로 설정함.
-		level = 1; // 지역변수로 선언시 안먹혔음 왜 일까
-	if(level == 1) {
-
-		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
-			public void actionPerformed(ActionEvent e) { dispose();	new mine();	} });
-		menu.addSeparator(); // 줄긋기
-		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-			public void actionPerformed(ActionEvent e) { dispose();	new mine();	} });
-		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-			public void actionPerformed(ActionEvent e) {level = 2;	dispose();	new mine();	} });
-		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-			public void actionPerformed(ActionEvent e) {level = 3;	dispose();	new mine();	} });
-		menu.addSeparator(); // 메뉴바에 줄긋기
-		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
-			public void actionPerformed(ActionEvent e) {System.exit(0);} });
-	    	// 하나의 프레임만 쓰기 때문에 dispose()만 해도 실행프로그램이 백그라운드에 남아 있지 않지만
-	    	// 여러개의 프레임이 필요해지는 경우에는 이 명령어를 사용할 것
-		mb.add(menu); // 메뉴바에 메뉴를 add
+	super("지뢰찾기"); 																				// 타이틀 설정
+	setResizable(true);																				// 프레임 사이즈 조정가능하게 변경
+																									/* 
+																									 * 다른 난이도에서 다른 난이도로 넘어갈때
+																									 * 프레임 사이즈를 조정하기 위함임
+																									 * 마지막 구문에 반드시 다시 닫아줄것
+																									 */
+	this.setIconImage(logo.getImage());																// 실행시 좌측 상단에 파일 아이콘 지뢰 이미지로 설정
 	
-		this.setJMenuBar(mb);
-		this.setLayout(new BorderLayout());
-		add(jp);
-		add(jp2, "North");
-		jp2.add(reset); // 패널에 리셋 버튼 추가
-		
-		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
-		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
-		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
-				dispose();
-				new mine();
+	if(level == 0) level = 1;																		// 전역변수 레벨이 0(초기값이 0임)일 경우 1로 설정함.
+	if(level == 1) {																				// 레벨 값이 1(초급단계)일 경우
+																									// 메뉴바 셋팅 시작	//
+		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { 				// 메뉴바에서 다시하기 클릭시
+			public void actionPerformed(ActionEvent e) { dispose();	new mine();	} });				// 익명리스너로 처리
+		menu.addSeparator(); 																		// 메뉴바에 줄긋기
+		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { 						// 메뉴바에서 초급메뉴 선택시 익명리스너로 처리
+			public void actionPerformed(ActionEvent e) { dispose();	new mine();	} });				// 레벨값이 이미 1인 상황에서 초급을 선택시 창을 닫고 다시 띄우기만 함
+		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { 						// 메뉴바에서 중급메뉴 선택시 익명리스너로 처리
+			public void actionPerformed(ActionEvent e) {level = 2;	dispose();	new mine();	} });	// 중급을 선택시 레벨값을 2으로 변경해주고 선택시 창을 닫고 다시 띄우기만 함
+		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() {						// 메뉴바에서 고급메뉴 선택시 익명리스너로 처리
+			public void actionPerformed(ActionEvent e) {level = 3;	dispose();	new mine();	} });	// 고급을 선택시 레벨값을 3으로 변경해주고 선택시 창을 닫고 다시 띄우기만 함
+		menu.addSeparator(); 																		// 메뉴바에 줄긋기
+		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { 						// 메뉴바에서 종료메뉴 선택시
+			public void actionPerformed(ActionEvent e) {System.exit(0);} });						// 마찬가지로 익명리스너로 처리함.
+	    																							/*
+	    																							 * 확실하게 종료할때에는 반드시
+	    																							 * 이 명령어 (System.exit(0);) 를 사용할 것
+	    																							 * */
+		mb.add(menu); 																				// 메뉴바(mb)에 메뉴(menu)를 추가
+		this.setJMenuBar(mb);																		// 현재(this) 프레임(JFrame)에 메뉴바를 추가함
+		this.setLayout(new BorderLayout());															// 현재 프레임의 레이아웃을 설정(BorderLayout)
+		add(jp);																					// 지뢰판을 설정하기 위한 패널을 현 프레임에 추가
+		add(jp2, "North");																			// 리셋 버튼을 담기 위한 패널을 북쪽에 추가함
+		jp2.add(reset); 																			// 패널에 리셋 버튼 추가
+		reset.setIcon(icon_reset);																	// 리셋버튼 아이콘 설정
+		reset.setBorderPainted(false);																// 버튼의 외곽선을 안보이게 설정
+		reset.setContentAreaFilled(false);															// 버튼의 내부영역 채우기 안보이게 설정(파란색)
+		reset.setFocusPainted(false);																// 버튼이 포커스(마우스가 올라간 상태)시 생기는 테두리를 안보이게 설정함
+		reset.addActionListener(new ActionListener() { 												// 리셋버튼을 눌렀을때
+			public void actionPerformed(ActionEvent e) {											// 익명리스너로 처리함. 코드가 단순하면서 액션리스너가 필요할때는 익명리스너로 처리하는게 편함
+				JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");								// 리셋 버튼 클릭시 "'리셋'되었습니다."라는 메시지가 담긴 팝업창을 띄움
+				dispose();																			// 해당 프레임을 닫음.
+				new mine();																			// 새로 불러줌()
 			}
 		});
-
-		for(; ; ) {
-			for(int i, j, count = 0; count < 10;) {
-				i=rnd.nextInt(10);
-				j=rnd.nextInt(10);
-				if(mine[i][j] != -1) {
-					mine[i][j] = -1;
-					count++;
-				}
-			}
-			break;
+																									// 지뢰 배치를 위한 반복문
+		for(; ; ) {																					
+			for(int i, j, count = 0; count < 10;) {													// i, j, count 선언 및 초기화
+				i=rnd.nextInt(10);																	// i값에 0 ~ 9 사이의 값을 대입
+				j=rnd.nextInt(10);																	// j값에 0 ~ 9 사이의 값을 대입
+																									// --------------------------------------------------
+				if(mine[i][j] != -1) {																// -mine[i][j] 배열 값이 -1이 아니면 (지뢰가 배치되지 않았으면)	-
+					mine[i][j] = -1;																// -mine[i][j] 배열에 -1을 대입							-
+					count++;																		// -count값을 증가										-
+				}																					// -중복값을 걸러내기 위함임								-
+			}																						// --------------------------------------------------
+			break;																					// 조건(count가 10보다 작은가?)이 충족되지 않으면 반복문 종료
 		}
 	
-		for(int i = 0; i < 10; i++) { // 버튼배열 생성
-			for(int j = 0; j < 10; j++) {
-			if(mine[i][j] == 0) { // mine배열 i위치가 0일경우
-				jb[i][j] = new JButton();
-				jb[i][j].setPreferredSize(new Dimension(20, 20));
-				jb[i][j].addActionListener(new ButtonListener()); // 버튼 리스너 생성
-    	
-				jp.add(jb[i][j]);
-			}
-			else if(mine[i][j] != 0) { // mine배열 i위치가 0이 아닐경우
-				jb[i][j] = new JButton();
-				jb[i][j].setPreferredSize(new Dimension(20, 20));
-				jb[i][j].addActionListener(new MineListener()); // 마인 리스너 생성
-				jb[i][j].setText("1"); /////////////////////////////////////// 구분하기 위해 설정함. 마지막에 지울것
-				jp.add(jb[i][j]);
-				
-			}
+		for(int i = 0; i < 10; i++) {																// 버튼 생성을 위한 반복문
+			for(int j = 0; j < 10; j++) {															// 
+				if(mine[i][j] == 0) { 																// mine배열 i,j의 배열 값이 0일 경우
+					jb[i][j] = new JButton();														// jb(JButton)[i][j]를 생성
+					jb[i][j].setPreferredSize(new Dimension(20, 20));								// jb[i][j]의 버튼 사이즈를 조정
+					jb[i][j].addActionListener(new ButtonListener());								// 일반버튼 클릭에 반응하기 위한 액션리스너(ButtonListener) 생성
+					jp.add(jb[i][j]);																// jp(JPanel)에 jb[i][j]를 추가
+				}
+				else if(mine[i][j] != 0) { 															// mine배열 i,j의 배열 값이 0이 아닐경우
+					jb[i][j] = new JButton();														// jb(JButton)[i][j]를 생성
+					jb[i][j].setPreferredSize(new Dimension(20, 20));								// jb[i][j]의 버튼 사이즈를 조정
+					jb[i][j].addActionListener(new MineListener());									// 지뢰버튼 클릭에 반응하기 위한 액션리스너(MineListener) 생성
+					jp.add(jb[i][j]);																// jp(JPanel)에 jb[i][j]를 추가
+				}
 			}
 		}
 		
-		for(int i=0; i<10; i++) { // 지뢰 주변 숫자 채우기
+		for(int i=0; i<10; i++) {																	// 지뢰 주변 칸에 숫자를 채우기 위한 반복문
 			for(int j=0; j<10; j++) {
-				int count=0;
-				if(mine[i][j] != -1) {
-					if(i >= 0 && j >= 0 && i <= 9 && j <= 9) {
-						if(i-1 >= 0 && j-1 >= 0)
-							if(mine[i-1][j-1] == -1) count ++;
-						if(i-1 >= 0)
-							if(mine[i-1][j] == -1) count ++;
-						if(i-1 >= 0 && j+1 <= 9)
-							if(mine[i-1][j+1] == -1) count ++;
-						if(j-1 >= 0)
-							if(mine[i][j-1] == -1) count ++;
-						if(j+1 <= 9)
-							if(mine[i][j+1] == -1) count ++;
+				int count=0;																		// 숫자를 체크하기 위해 변수 선언
+				if(mine[i][j] != -1) {																// mine[i][j] 위치의 배열값이 지뢰값이(-1) 아니면
+					if(i >= 0 && j >= 0 && i <= 9 && j <= 9) {										// 배열의 범위를 벗어남을 막기위해 설정
+						if(i-1 >= 0 && j-1 >= 0)				// -------------------------------- //
+							if(mine[i-1][j-1] == -1) count ++;	//				1		2		3--	//
+						if(i-1 >= 0)							//				0		0		0--	// 
+							if(mine[i-1][j] == -1) count ++;	//								 -- // 
+						if(i-1 >= 0 && j+1 <= 9)				//				4		i,j		6-- // 1~9번 자리에 지뢰가 있는지 체크하고
+							if(mine[i-1][j+1] == -1) count ++;	//				0		0		0-- // 지뢰가 있으면 count를 증가
+						if(j-1 >= 0)							//								 -- // 
+							if(mine[i][j-1] == -1) count ++;	//				7		8		9-- // 
+						if(j+1 <= 9)							//				0		0		0-- // 
+							if(mine[i][j+1] == -1) count ++;	// -------------------------------- // 
 						if(i+1 <= 9 && j-1 >= 0)
 							if(mine[i+1][j-1] == -1) count ++;
 						if(i+1 <= 9)
 							if(mine[i+1][j] == -1) count ++;
 						if(i+1 <= 9 && j+1 <= 9)
 							if(mine[i+1][j+1] == -1) count ++;
-					}
-					mine[i][j] = count;
+					}											
+					mine[i][j] = count;																// 체크가 끝나면 mine[i][j]에 count를 대입
 				}
-				count = 0;
+				count = 0;																			// 반복하기전에 count를 초기화
 			}
 		}
-		
-		setVisible(true); // 프레임 보이기
-		setSize(280, 360); // 프레임 사이즈 설정 윈도우
-//		setSize(260, 350);
-//		setResizable(false); // 창 사이즈 변경 불가
-		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+		lose = false;																				// 패배 값을 거짓으로 바꿈
+		setVisible(true); 																			// 프레임 보이기
+		setSize(280, 360); 																			// 프레임 사이즈 설정 윈도우
+		setResizable(false);																		// 프레임 사이즈를 유저가 설정하지 못하게 잠금
+		this.setLocationRelativeTo(null);															// 화면 중앙에 띄우기
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);												// X버튼 누르면 닫기
+																									// 설정 안하면 프로세스에(백그라운드에) 남아있음
 	}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
+																									/*
+																									 * 아래 중급부터 고급단계까지는
+																									 * 초기 조건 level값의 비교와
+																									 * 버튼과 지뢰배열의 사이즈등
+																									 * 기본값만 다를뿐
+																									 * 모든 구조는 같음
+																									 */
 	if(level == 2) {
-		setResizable(true); // 창 사이즈 변경 불가
+		setResizable(true);
 		JMenuBar mb = new JMenuBar();
 		JMenu menu = new JMenu("파일");
 
-		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
+		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new mine();
 			}
 		});
-		menu.addSeparator(); // 줄긋기
-		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+		menu.addSeparator();
+		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				level = 1;
 				dispose();
 				new mine();
 			}
 		});
-		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-			public void actionPerformed(ActionEvent e) { // 이미 레벨값이 2임
+		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new mine();
 			}
 		});
-		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				level = 3;
 				dispose();
@@ -175,27 +189,27 @@ public mine() {
 			}
 		});
 	
-		menu.addSeparator(); // 메뉴바에 줄긋기
+		menu.addSeparator();
 	
-		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
+		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
-	    	// 우리는 하나의 프레임만 쓰기 때문에 dispose()만 해도 실행프로그램이 백그라운드에 남아 있지 않지만
-	    	// 여러개의 프레임이 필요해지는 경우에는 이 명령어를 사용할 것
 			}
 		});
-		mb.add(menu); // 메뉴바에 메뉴를 add
+		mb.add(menu);
 	
 		this.setJMenuBar(mb);
 	
 		this.setLayout(new BorderLayout());
 		add(jp);
 		add(jp2, "North");
-		jp2.add(reset); // 패널에 리셋 버튼 추가
+		jp2.add(reset);
 		
-		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
-		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
-		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
+		reset.setIcon(icon_reset);
+		reset.setBorderPainted(false);
+		reset.setContentAreaFilled(false);
+		reset.setFocusPainted(false);
+		reset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
 				dispose();
@@ -215,25 +229,24 @@ public mine() {
 			break;
 		}
 	
-		for(int i = 0; i < 15; i++) { // 버튼배열 생성
+		for(int i = 0; i < 15; i++) {
 			for(int j = 0; j < 15; j++) {
-			if(mine2[i][j] == 0) { // mine배열 i위치가 0일경우
+			if(mine2[i][j] == 0) {
 				jb2[i][j] = new JButton();
 				jb2[i][j].setPreferredSize(new Dimension(20,20));
-				jb2[i][j].addActionListener(new ButtonListener()); // 버튼 리스너 생성
+				jb2[i][j].addActionListener(new ButtonListener());
     	
 				jp.add(jb2[i][j]);
 			}
-			else if(mine2[i][j] != 0) { // mine배열 i위치가 0이 아닐경우
+			else if(mine2[i][j] != 0) {
 				jb2[i][j] = new JButton();
 				jb2[i][j].setPreferredSize(new Dimension(20,20));
-				jb2[i][j].addActionListener(new MineListener()); // 마인 리스너 생성
+				jb2[i][j].addActionListener(new MineListener());
 				jp.add(jb2[i][j]);
-				
 			}
 			}
 		}
-		for(int i=0; i<15; i++) { // 지뢰 주변 숫자 채우기
+		for(int i=0; i<15; i++) {
 			for(int j=0; j<15; j++) {
 				int count=0;
 				if(mine2[i][j] != -1) {
@@ -261,66 +274,72 @@ public mine() {
 			}
 		}
 		
-		setVisible(true); // 프레임 보이기
-		setSize(400, 490); // 프레임 사이즈 설정
-		setResizable(false); // 창 사이즈 변경 불가
-		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+		lose = false;
+		setVisible(true);
+		setSize(400, 490);
+		setResizable(false);
+		this.setLocationRelativeTo(null); 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+																									/*
+																									 * 여기서부터 
+																									 * 레벨 3
+																									 */
+	
 	if(level == 3) {
 		JMenuBar mb = new JMenuBar();
 		JMenu menu = new JMenu("파일");
 
-		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { // 메뉴바에서 다시하기 클릭
+		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					dispose();
 					new mine();
 			}
 		});
-		menu.addSeparator(); // 줄긋기
-		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+		menu.addSeparator();
+		menu.add(new JMenuItem("초급")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				level = 1;
 				dispose();
 				new mine();
 			}
 		});
-		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
+		menu.add(new JMenuItem("중급")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				level = 2;
 				dispose();
 				new mine();
 			}
 		});
-		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() { // 메뉴바 초급메뉴 선택
-			public void actionPerformed(ActionEvent e) { // 이미 레벨값이 3임
+		menu.add(new JMenuItem("고급")).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new mine();
 			}
 		});
 	
-		menu.addSeparator(); // 메뉴바에 줄긋기
+		menu.addSeparator();
 	
-		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() { // 메뉴바 종료메뉴 선택
+		menu.add(new JMenuItem("종료")).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
-	    	// 우리는 하나의 프레임만 쓰기 때문에 dispose()만 해도 실행프로그램이 백그라운드에 남아 있지 않지만
-	    	// 여러개의 프레임이 필요해지는 경우에는 이 명령어를 사용할 것
 			}
 		});
-		mb.add(menu); // 메뉴바에 메뉴를 add
+		mb.add(menu);
 	
 		this.setJMenuBar(mb);
 	
 		this.setLayout(new BorderLayout());
 		add(jp);
 		add(jp2, "North");
-		jp2.add(reset); // 패널에 리셋 버튼 추가
+		jp2.add(reset);
+		reset.setIcon(icon_reset);
+		reset.setBorderPainted(false);
+		reset.setContentAreaFilled(false);
+		reset.setFocusPainted(false);
 		
-		reset.setText("리셋"); // 리셋 버튼 텍스트 설정
-		reset.setPreferredSize(new Dimension(260, 30)); // 리셋버튼 사이즈 조정
-		reset.addActionListener(new ActionListener() { // 리셋버튼 눌렀을때
+		reset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "'리셋'되었습니다.");
 					dispose();
@@ -340,23 +359,23 @@ public mine() {
 			break;
 		}
 	
-		for(int i = 0; i < 20; i++) { // 버튼배열 생성
+		for(int i = 0; i < 20; i++) {
 			for(int j = 0; j < 20; j++) {
-			if(mine3[i][j] == 0) { // mine배열 i,j 위치의 값이 0일경우
+			if(mine3[i][j] == 0) {
 				jb3[i][j] = new JButton();
 				jb3[i][j].setPreferredSize(new Dimension(20,20));
-				jb3[i][j].addActionListener(new ButtonListener()); // 버튼 리스너 생성
+				jb3[i][j].addActionListener(new ButtonListener());
 				jp.add(jb3[i][j]);
 			}
-			else if(mine3[i][j] != 0) { // mine배열 i,j 위치의 값이 0이 아닐경우
+			else if(mine3[i][j] != 0) {
 				jb3[i][j] = new JButton();
 				jb3[i][j].setPreferredSize(new Dimension(20,20));
-				jb3[i][j].addActionListener(new MineListener()); // 마인 리스너 생성
+				jb3[i][j].addActionListener(new MineListener());
 				jp.add(jb3[i][j]);
 			}
 		}
 	}
-		for(int i=0; i<20; i++) { // 지뢰 주변 숫자 채우기
+		for(int i=0; i<20; i++) {
 			for(int j=0; j<20; j++) {
 				int count=0;
 				if(mine3[i][j] != -1) {
@@ -384,27 +403,32 @@ public mine() {
 			}
 		}
 		
-		
-		setVisible(true); // 프레임 보이기
-		setSize(520, 610); // 프레임 사이즈 설정
-		setResizable(false); // 창 사이즈 변경 불가
-		this.setLocationRelativeTo(null); // 화면 중앙에 띄우기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // X 누르면 닫기
+		lose = false;
+		setVisible(true);
+		setSize(520, 610);
+		setResizable(false);
+		this.setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
 
-private class ButtonListener implements ActionListener  { // 지뢰가 아닌 버튼 클릭
-	public void actionPerformed(ActionEvent e) {
-		int temp = 0;
-		if(level == 1) {
-			for(int i = 0; i < 10; i++) {
+private class ButtonListener implements ActionListener  { 											// 지뢰가 아닌 버튼 클릭했을때 실행되는 액션리스너
+	public void actionPerformed(ActionEvent e) {													
+		if(level == 1) {																			// level값이 1일때
+			for(int i = 0; i < 10; i++) {															// 해당 버튼의 배열값을 찾기 위한 반복문
 				for(int j = 0; j < 10; j++) {
-					if(e.getSource() == jb[i][j]) {
-						check(i, j);
+					if(e.getSource() == jb[i][j]) {													// 해당 버튼의 배열값을 찾으면
+						check(i, j);																// check에 (i,j)값을 넘겨줌
 					}
 				}
 			}
 		}
+																									/*
+																									 * level값이 2인경우와
+																									 * level값이 3인경우도
+																									 * 반복문의 횟수만 다를뿐
+																									 * 똑같음
+																									 */
 		if(level == 2) {
 			for(int i = 0; i < 15; i++) {
 				for(int j = 0; j < 15; j++) {
@@ -426,48 +450,58 @@ private class ButtonListener implements ActionListener  { // 지뢰가 아닌 �
 	}
 }
 
-private class MineListener implements ActionListener  { // 지뢰 클릭
+private class MineListener implements ActionListener  { 											// 지뢰인 버튼을 클릭했을때 실행되는 액션리스너
 	public void actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");
+		if(lose == false) JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");			// 앞에서 지뢰를 클릭하지 않았던 경우 "아쉽습니다. 지뢰를 클릭했습니다."라는 메시지가 담긴 팝업창을 띄움
 		
-		if(level == 1) {
+		if(level == 1) {																			// 지뢰로 설정된 모든 버튼의 위치를 나타내기 위한 반복문
 			for(int i = 0; i < 10; i++) {
 				for(int j = 0; j < 10; j++) {
-					if(mine[i][j] == -1)
-						jb[i][j].setIcon(icon_mine);
-					jb[i][j].setEnabled(false);
-					
+					if(mine[i][j] == -1) {															// 해당 i, j의 위치에 있는 버튼이 지뢰일 경우
+						jb[i][j].setIcon(icon_mine);												// 지뢰를 해당하는 이미지를 버튼에 설정함
+						jb[i][j].setBorderPainted(false);
+						lose=true;																	// lose값은 true로 설정 || 패배 후 다른 지뢰를 눌렀을때 반응 없게 하기 위함임
+					}
+					jb[i][j].setBorderPainted(false);												// 지뢰버튼이 아닌 경우 버튼을 클릭해도 반응이 없게 설정하기 위해 false값을 설정
 				}
 			}
-		}
+		}																							// 아래 내용 모두 같음
 		if(level == 2) {
 			for(int i = 0; i < 15; i++) {
 				for(int j = 0; j < 15; j++) {
-					if(mine2[i][j] == -1)
+					if(mine2[i][j] == -1) {
 						jb2[i][j].setIcon(icon_mine);
-					jb2[i][j].setEnabled(false);
+						jb2[i][j].setBorderPainted(false);
+						lose=true;
+					}
+					jb2[i][j].setBorderPainted(false);
 				}
 			}
 		}
 		if(level == 3) {
 			for(int i = 0; i < 20; i++) {
 				for(int j = 0; j < 20; j++) {
-					if(mine3[i][j] == -1)
+					if(mine3[i][j] == -1){
 						jb3[i][j].setIcon(icon_mine);
-					jb3[i][j].setEnabled(false);
+						jb3[i][j].setBorderPainted(false);
+						lose=true;
+					}
+					jb3[i][j].setBorderPainted(false);
 				}
 			}
 		}
 	}
 }
 
-private void check(int i, int j) {
-	if(level == 1) {
-		try {
-			if(mine[i][j] == 0 && jb[i][j].isEnabled() == true) {
-				jb[i][j].setIcon(icon0);
-				jb[i][j].setEnabled(false);
-				check(i+1, j);
+private void check(int i, int j) {																	// 비교하기 위한 함수
+	if(level == 1) {																				// level값이 1일경우
+		try {																						// 배열의 범위를 벗어남을 처리하기 위한 try~catch문
+			if(mine[i][j] == 0 && jb[i][j].isBorderPainted() == true) {								// 해당 mine[i][j]값이 0의 값을 가지면서 버튼이 활성화된 상태에 있을경우
+				jb[i][j].setIcon(icon0);															// 숫자0을 뜻하기 위한 이미지를 설정
+				jb[i][j].setBorderPainted(false);													// 버튼의 외곽선을 안보이게 설정
+				jb[i][j].setContentAreaFilled(false);												// 버튼의 내부영역 채우기 안보이게 설정(파란색)
+				jb[i][j].setFocusPainted(false);													// 버튼이 포커스(마우스가 올라간 상태)시 생기는 테두리를 안보이게 설정함
+				check(i+1, j);																		// 주변에 0이 있는지 확인하기 위함
 				check(i-1, j);
 				check(i, j+1);
 				check(i, j-1);
@@ -476,36 +510,64 @@ private void check(int i, int j) {
 				check(i-1, j+1);
 				check(i+1, j-1);
 			}
-			else {
-				if(jb[i][j].isEnabled() == true) {
-					jb[i][j].setText(""+mine[i][j]);
-					switch(mine[i][j]) {
-					case 1:
+			else {																					// 그외의 경우
+				if(jb[i][j].isBorderPainted() == true) {											// 해당 mine[i][j]의 값이 0이 아닌경우임
+																									// 이 함수가 불러지는 경우 자체가 지뢰가 아닌경우이기 때문에
+																									// 지뢰일 경우를 체크할 필요는 없음
+					switch(mine[i][j]) {															// 스위치 케이스문
+					case 1:																			// 1~9의 경우 각 숫자에 맞는 이미지를 설정함
 						jb[i][j].setIcon(icon1);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 2:
 						jb[i][j].setIcon(icon2);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 3:
 						jb[i][j].setIcon(icon3);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 4:
 						jb[i][j].setIcon(icon4);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 5:
 						jb[i][j].setIcon(icon5);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 6:
 						jb[i][j].setIcon(icon6);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 7:
 						jb[i][j].setIcon(icon7);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 8:
 						jb[i][j].setIcon(icon8);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					case 9:
 						jb[i][j].setIcon(icon9);
+						jb[i][j].setBorderPainted(false);
+						jb[i][j].setContentAreaFilled(false);
+						jb[i][j].setFocusPainted(false);
 						break;
 					}
 				}
@@ -515,11 +577,13 @@ private void check(int i, int j) {
 			
 		}
 	}
-	if(level == 2) {
+	if(level == 2) {																				// 이하 똑같음
 		try {
-			if(mine2[i][j] == 0 && jb2[i][j].isEnabled() == true) {
+			if(mine2[i][j] == 0 && jb2[i][j].isBorderPainted() == true) {
 				jb2[i][j].setIcon(icon0);
-				jb2[i][j].setEnabled(false);
+				jb2[i][j].setBorderPainted(false);
+				jb2[i][j].setContentAreaFilled(false);
+				jb2[i][j].setFocusPainted(false);
 				check(i+1, j);
 				check(i-1, j);
 				check(i, j+1);
@@ -530,9 +594,63 @@ private void check(int i, int j) {
 				check(i+1, j-1);
 			}
 			else {
-				if(jb2[i][j].isEnabled() == true) {
-					jb2[i][j].setText(""+mine2[i][j]);
-					jb2[i][j].setEnabled(false);
+				if(jb2[i][j].isBorderPainted() == true) {
+					switch(mine2[i][j]) {															
+					case 1:																		
+						jb2[i][j].setIcon(icon1);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 2:
+						jb2[i][j].setIcon(icon2);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 3:
+						jb2[i][j].setIcon(icon3);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 4:
+						jb2[i][j].setIcon(icon4);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 5:
+						jb2[i][j].setIcon(icon5);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 6:
+						jb2[i][j].setIcon(icon6);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 7:
+						jb2[i][j].setIcon(icon7);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 8:
+						jb2[i][j].setIcon(icon8);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+					case 9:
+						jb2[i][j].setIcon(icon9);
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setContentAreaFilled(false);
+						jb2[i][j].setFocusPainted(false);
+						break;
+				}
 				}
 			}
 		}
@@ -542,9 +660,11 @@ private void check(int i, int j) {
 	}
 	if(level == 3) {
 		try {
-			if(mine3[i][j] == 0 && jb3[i][j].isEnabled() == true) {
+			if(mine3[i][j] == 0 && jb3[i][j].isBorderPainted() == true) {
 				jb3[i][j].setIcon(icon0);
-				jb3[i][j].setEnabled(false);
+				jb3[i][j].setBorderPainted(false);
+				jb3[i][j].setContentAreaFilled(false);
+				jb3[i][j].setFocusPainted(false);
 				check(i+1, j);
 				check(i-1, j);
 				check(i, j+1);
@@ -555,36 +675,61 @@ private void check(int i, int j) {
 				check(i+1, j-1);
 			}
 			else {
-				if(jb3[i][j].isEnabled() == true) {
-					jb3[i][j].setText(""+mine3[i][j]);
-					jb3[i][j].setEnabled(false);
-					switch(mine[i][j]) {
+				if(jb3[i][j].isBorderPainted() == true) {
+					switch(mine3[i][j]) {
 					case 1:
 						jb3[i][j].setIcon(icon1);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 2:
 						jb3[i][j].setIcon(icon2);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 3:
 						jb3[i][j].setIcon(icon3);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 4:
 						jb3[i][j].setIcon(icon4);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 5:
 						jb3[i][j].setIcon(icon5);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 6:
 						jb3[i][j].setIcon(icon6);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 7:
 						jb3[i][j].setIcon(icon7);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 8:
 						jb3[i][j].setIcon(icon8);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					case 9:
 						jb3[i][j].setIcon(icon9);
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setContentAreaFilled(false);
+						jb3[i][j].setFocusPainted(false);
 						break;
 					}
 				}
@@ -598,8 +743,8 @@ private void check(int i, int j) {
 
 public static void main(String[] args) {
 	// TODO Auto-generated method stub
-	new mine(); // 프레임 불러오기
-	}static int level = 0;
+	new mine();																						// 프로그램 실행시 프레임 불러오기
+	}static int level = 0; static boolean lose = false;														// 전역변수 level 선언 및 0으로 초기화 함
 }
 
 // 11.26
@@ -652,4 +797,10 @@ public static void main(String[] args) {
  // 버튼 클릭시 나오는 숫자를 이미지로 변경함
  // 지뢰 클릭시 모든 지뢰 표시도 이미지로 변경함
  // 이미지 사이즈 조절만 따로 해주면 되고, 리셋버튼만들고
- // 시간 여유가 되면 깃발 표시까지 추가하고 안되면 어쩔수 
+ // 시간 여유가 되면 깃발 표시까지 추가
+
+ // 11.30
+ // 지뢰 클릭시 다른 버튼들 클릭해도 반응없게 설정함
+ // 버튼의 Enadble값을 false로 설정하면 이미지까지 회색으로 변해서 상태값을 조건으로 바꾸고 상태값으로 체크 및 표시
+ // 리셋 버튼에 글자를 지우고 깃발 이미지를 적용
+ 

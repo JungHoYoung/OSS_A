@@ -1,25 +1,29 @@
 package oss_mine;
 
 import javax.swing.*;
-import javax.swing.event.MenuListener;
-import java.awt.color.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+																		/*
+																		 * 테스트 환경
+																		 * OS		:	Windows 10
+																		 * Display	:	1920*1080
+																		 * OS별로 프레임 사이즈가 다르게 보일수 있음
+																		 */
 
-public class mine extends JFrame {									// 	JFrame 상속 *이 클래스 자체가 JFrame라고 생각하면 될듯?
-	JPanel 		jp 		=	new JPanel();							//  지뢰판을 설정하기 위한 패널 생성
-	JPanel 		jp2		=	new JPanel();							//  리셋버튼을 설정하기 위한 패널 생성
-	JButton 	reset	=	new JButton();							//  리셋 버튼 생성
-	Random 		rnd 	=	new Random();							//  지뢰 배치를 위한 랜덤함수 생성
-	int[][] 	mine 	=	new int[10][10];						// 	초급 난이도에서 지뢰를 담을 10x10 배열 생성
-	int[][] 	mine2 	=	new int[15][15];						// 	중급 난이도에서 지뢰를 담을 15x15 배열 생성
-	int[][]	 	mine3 	=	new int[20][20];						// 	고급 난이도에서 지뢰를 담을 20x20 배열 생성						
-	JButton 	jb[][] 	=	new JButton[10][10];					// 	초급 난이도에 쓰일 10x10 버튼 생성
-	JButton 	jb2[][] = 	new JButton[15][15];					// 	중급 난이도에 쓰일 15x15 버튼 생성
-	JButton     jb3[][]	= 	new JButton[20][20];					// 	고급 난이도에 쓰일 20x20 버튼 생성
-	JMenuBar	 mb 	=	new JMenuBar();							//	메뉴바 생성
-	JMenu 		menu 	=	new JMenu("파일");						//	메뉴바에 '파일'이라는 항목 생성
+public class mine extends JFrame {										// 	JFrame 상속 *이 클래스 자체가 JFrame라고 생각하면 될듯?
+	JPanel 		jp 			=	new JPanel();							//  지뢰판을 설정하기 위한 패널 생성
+	JPanel 		jp2			=	new JPanel();							//  리셋버튼을 설정하기 위한 패널 생성
+	JButton 	reset		=	new JButton();							//  리셋 버튼 생성
+	Random 		rnd 		=	new Random();							//  지뢰 배치를 위한 랜덤함수 생성
+	int[][] 	mine 		=	new int[10][10];						// 	초급 난이도에서 지뢰를 담을 10x10 배열 생성
+	int[][] 	mine2 		=	new int[15][15];						// 	중급 난이도에서 지뢰를 담을 15x15 배열 생성
+	int[][]	 	mine3 		=	new int[20][20];						// 	고급 난이도에서 지뢰를 담을 20x20 배열 생성						
+	JButton 	jb[][] 		=	new JButton[10][10];					// 	초급 난이도에 쓰일 10x10 버튼 생성
+	JButton 	jb2[][] 	= 	new JButton[15][15];					// 	중급 난이도에 쓰일 15x15 버튼 생성
+	JButton     jb3[][]		= 	new JButton[20][20];					// 	고급 난이도에 쓰일 20x20 버튼 생성
+	JMenuBar	 mb 		=	new JMenuBar();							//	메뉴바 생성
+	JMenu 		menu 		=	new JMenu("파일");						//	메뉴바에 '파일'이라는 항목 생성
 	
 	ImageIcon icon0 = new ImageIcon("images/mine0.png");			//	숫자 표시 할 이미지 설정
 	ImageIcon icon1 = new ImageIcon("images/mine1.png");			//	숫자 표시 할 이미지 설정
@@ -34,7 +38,7 @@ public class mine extends JFrame {									// 	JFrame 상속 *이 클래스 자�
 	ImageIcon icon_mine = new ImageIcon("images/mine.png");			//	지뢰 표시 할 이미지 설정
 	ImageIcon icon_reset = new ImageIcon("images/reset.png");		//  리셋 표시 할 이미지 설정
 	ImageIcon icon_flag = new ImageIcon("images/flag.png");			//  깃발 표시 할 이미지 설정
-	ImageIcon icon_flag2 = new ImageIcon("images/flag2.png");		//  깃발 표시 할 이미지 설정
+	ImageIcon icon_flagx = new ImageIcon("images/flagx.png");		//  잘못된 위치에 깃발 설치시 알려줄 이미지 설정
 	ImageIcon logo = new ImageIcon("images/logo.png");				//  파일 로고 변경 할 이미지 설정
 	
 
@@ -50,7 +54,7 @@ public mine() {
 	
 	if(level == 0) level = 1;																		// 전역변수 레벨이 0(초기값이 0임)일 경우 1로 설정함.
 	if(level == 1) {																				// 레벨 값이 1(초급단계)일 경우
-																									// 메뉴바 셋팅 시작	//
+																									// 메뉴바 셋팅 시작
 		menu.add(new JMenuItem("새로 시작하기")).addActionListener(new ActionListener() { 				// 메뉴바에서 다시하기 클릭시
 			public void actionPerformed(ActionEvent e) { dispose();	new mine();	} });				// 익명리스너로 처리
 		menu.addSeparator(); 																		// 메뉴바에 줄긋기
@@ -84,6 +88,7 @@ public mine() {
 				new mine();																			// 새로 불러줌()
 			}
 		});
+
 																									// 지뢰 배치를 위한 반복문
 		for(; ; ) {																					
 			for(int i, j, count = 0; count < 10;) {													// i, j, count 선언 및 초기화
@@ -146,7 +151,7 @@ public mine() {
 				count = 0;																			// 반복하기전에 count를 초기화
 			}
 		}
-		lose = false;																				// 패배 값을 거짓으로 바꿈
+		ending = false;																				// 엔딩 값을 거짓으로 바꿈
 		setVisible(true); 																			// 프레임 보이기
 		setSize(280, 365); 																			// 프레임 사이즈 설정 윈도우
 		setResizable(false);																		// 프레임 사이즈를 유저가 설정하지 못하게 잠금
@@ -285,7 +290,7 @@ public mine() {
 			}
 		}
 		
-		lose = false;
+		ending = false;
 		setVisible(true);
 		setSize(400, 490);
 		setResizable(false);
@@ -338,7 +343,8 @@ public mine() {
 			}
 		});
 		mb.add(menu);
-	
+		
+		
 		this.setJMenuBar(mb);
 	
 		this.setLayout(new BorderLayout());
@@ -357,6 +363,7 @@ public mine() {
 					new mine();
 			}
 		});
+		
 
 		for(; ; ) {
 			for(int i, j, count = 0; count < 40;) {
@@ -418,9 +425,9 @@ public mine() {
 			}
 		}
 		
-		lose = false;
+		ending = false;
 		setVisible(true);
-		setSize(520, 610);
+		setSize(520, 615);
 		setResizable(false);
 		this.setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -432,7 +439,7 @@ private class ButtonListener implements ActionListener  { 											// 지뢰�
 		if(level == 1) {																			// level값이 1일때
 			for(int i = 0; i < 10; i++) {															// 해당 버튼의 배열값을 찾기 위한 반복문
 				for(int j = 0; j < 10; j++) {
-					if(e.getSource() == jb[i][j] && jb[i][j].getBackground() == Color.DARK_GRAY) {	// 해당 버튼의 배열값을 찾으면
+					if(e.getSource() == jb[i][j] && jb[i][j].getBackground() == Color.DARK_GRAY) {	// 넘어온 e 값과 jb[i][j]의 값이 같고 백그라운드컬러가 DARK_GRAY면
 						check(i, j);																// check에 (i,j)값을 넘겨줌
 					}
 				}
@@ -465,32 +472,50 @@ private class ButtonListener implements ActionListener  { 											// 지뢰�
 	}
 }
 
-private class MineListener implements ActionListener  { 											// 지뢰인 버튼을 클릭했을때 실행되는 액션리스너
+private class MineListener implements ActionListener  { 												// 지뢰인 버튼을 클릭했을때 실행되는 액션리스너
 	public void actionPerformed(ActionEvent e) {
-		if(lose == false) JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");{			// 앞에서 지뢰를 클릭하지 않았던 경우 "아쉽습니다. 지뢰를 클릭했습니다."라는 메시지가 담긴 팝업창을 띄움
+		if(ending == false) JOptionPane.showMessageDialog(null, "아쉽습니다. 지뢰를 클릭했습니다.");{			// 엔딩값이 false인 경우 "아쉽습니다. 지뢰를 클릭했습니다."라는 메시지가 담긴 팝업창을 띄움
 		
-		if(level == 1) {																			// 지뢰로 설정된 모든 버튼의 위치를 나타내기 위한 반복문
+		if(level == 1) {																				// 지뢰로 설정된 모든 버튼의 위치를 나타내기 위한 반복문
 			for(int i = 0; i < 10; i++) {
 				for(int j = 0; j < 10; j++) {
-					if(mine[i][j] == -1) {	// 해당 i, j의 위치에 있는 버튼이 지뢰일 경우
-						jb[i][j].setIcon(icon_mine);												// 지뢰를 해당하는 이미지를 버튼에 설정함
-						jb[i][j].setBorderPainted(false);
-						lose=true;																	// lose값은 true로 설정 || 패배 후 다른 지뢰를 눌렀을때 반응 없게 하기 위함임
-					}
-					jb[i][j].setBorderPainted(false);												// 지뢰버튼이 아닌 경우 버튼을 클릭해도 반응이 없게 설정하기 위해 false값을 설정
+					if(mine[i][j] == -1) {																// 해당 i, j의 위치에 있는 버튼이 지뢰일 경우
+							jb[i][j].setBackground(Color.DARK_GRAY);									// 백그라운드컬러를 기본으로 바꿈
+							jb[i][j].setIcon(icon_mine);												// 아이콘에 지뢰 이미지를 설정
+							ending=true;																// 전역변수 ending을 true로 바꿈 || 게임이 끝난 후 다른 지뢰 및 버튼 눌렀을때 반응 없게 하기 위함임
+						}
+						else if (mine[i][j] != -1 && jb[i][j].getBackground() != Color.DARK_GRAY) {		// 해당 i, j의 위치에 있는 버튼이 지뢰가 아니면서 기본색이 아닐경우 (깃발을 꽂은경우)
+							jb[i][j].setBorderPainted(false);											// BorderPainted 값을 false로 바꿈
+							jb[i][j].setBackground(Color.DARK_GRAY);									// 백그라운드컬러를 기본으로 바꿈
+							jb[i][j].setIcon(icon_flagx);												// 깃발에 x 표시된 아이콘을 설정
+						}
+						else
+							jb[i][j].setBorderPainted(false);											// 그 외의 경우(지뢰가 아니면서 깃발도 안꽂은경우)
+						
+					jb[i][j].setBorderPainted(false);													// 지뢰버튼이 아닌 경우 버튼을 클릭해도 반응이 없게 설정하기 위해 false값을 설정
+					jb[i][j].setBackground(Color.DARK_GRAY);											// 백그라운드컬러를 기본으로 설정
 				}
 			}
 			
-		}																							// 아래 내용 모두 같음
+		}																								// 아래 내용 모두 같음
 		if(level == 2) {
 			for(int i = 0; i < 15; i++) {
 				for(int j = 0; j < 15; j++) {
 					if(mine2[i][j] == -1) {
 						jb2[i][j].setIcon(icon_mine);
 						jb2[i][j].setBorderPainted(false);
-						lose=true;
+						ending=true;
 					}
+					else if (mine2[i][j] != -1 && jb2[i][j].getBackground() != Color.DARK_GRAY) {
+						jb2[i][j].setBorderPainted(false);
+						jb2[i][j].setBackground(Color.DARK_GRAY);
+						jb2[i][j].setIcon(icon_flagx);
+					}
+					else
+						jb2[i][j].setBorderPainted(false);
+					
 					jb2[i][j].setBorderPainted(false);
+					jb2[i][j].setBackground(Color.DARK_GRAY);
 				}
 			}
 		}	
@@ -500,9 +525,15 @@ private class MineListener implements ActionListener  { 											// 지뢰인 
 					if(mine3[i][j] == -1){
 						jb3[i][j].setIcon(icon_mine);
 						jb3[i][j].setBorderPainted(false);
-						lose=true;
+						ending=true;
 					}
-					jb3[i][j].setBorderPainted(false);
+					else if (mine3[i][j] != -1 && jb3[i][j].getBackground() != Color.DARK_GRAY) {
+						jb3[i][j].setBorderPainted(false);
+						jb3[i][j].setBackground(Color.DARK_GRAY);
+						jb3[i][j].setIcon(icon_flagx);
+					}
+					else
+						jb3[i][j].setBorderPainted(false);
 				}
 			}
 		}
@@ -511,50 +542,43 @@ private class MineListener implements ActionListener  { 											// 지뢰인 
 }
 
 
-private class clickListener implements MouseListener{ 																					// 깃발을 세우기 위한 마우스 리스너
+private class clickListener implements MouseListener{ 																						// 깃발을 세우기 위한 마우스 리스너
+	
+	/*
+	 * 마우스리스너를 사용할때 기본적으로 제공되는 함수들은
+	 * 사용하지 않더라도 있어야함.
+	 */
 	public void mouseClicked(MouseEvent e) {
 		
 	}
 
 	public void mousePressed(MouseEvent e) {
 		if(level == 1) {
-			if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {																		// 클릭 버튼이 마우스 우클릭인경우
-				for(int i = 0; i<10; i++) {																									// 버튼을 찾기 위한 반복문
+			if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {																		// 클릭한 버튼이 마우스 우클릭임을 비교
+				for(int i = 0; i<10; i++) {																									// 우클릭한 버튼을 찾기위한 비교문
 					for(int j = 0; j<10; j++) {
-						if(e.getSource() == jb[i][j] && jb[i][j].isBorderPainted()==true && jb[i][j].getBackground() == Color.DARK_GRAY) {	// 우클릭된 버튼을 찾았고
-																																			// 해당 버튼이 기본 버튼 상태면
-																																			// 1번 깃발을 꽂음
-							jb[i][j].setIcon(icon_flag);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
-							jb[i][j].setBackground(Color.GRAY);																				// 색을 변경함
+						if(e.getSource() == jb[i][j] && jb[i][j].isBorderPainted()==true && jb[i][j].getBackground() == Color.DARK_GRAY) {	// 우클릭된 버튼이 기본 상태면
+							jb[i][j].setIcon(icon_flag);																					// 깃발을 꽂음
+							jb[i][j].setBackground(Color.GRAY);																				// 깃발을 확인하기 위해 백그라운드 컬러를 변경
 						}
-						else if(e.getSource() == jb[i][j] && jb[i][j].isBorderPainted()==true && jb[i][j].getBackground() == Color.GRAY) {
-							jb[i][j].setIcon(icon_flag2);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
-							jb[i][j].setBackground(Color.LIGHT_GRAY);
-						}
-						else if(e.getSource() == jb[i][j] && jb[i][j].isBorderPainted()==true && jb[i][j].getBackground() == Color.LIGHT_GRAY) {
-							jb[i][j].setIcon(null);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
-							jb[i][j].setBackground(Color.DARK_GRAY);
-						}
+						else if(e.getSource() == jb[i][j] && jb[i][j].isBorderPainted()==true && jb[i][j].getBackground() == Color.GRAY) {	// 깃발을 꽂은 버튼이면
+							jb[i][j].setIcon(null);																							// 해당 버튼의 아이콘을 지우고
+							jb[i][j].setBackground(Color.DARK_GRAY);																		// 기본배경으로 변경
+						}																													// 이하 같음
 					}
 				}
 			}
 		}
 		if(level == 2) {
-			if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {																		// 클릭 버튼이 마우스 우클릭인경우
-				for(int i = 0; i<15; i++) {																									// 버튼을 찾기 위한 반복문
+			if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
+				for(int i = 0; i<15; i++) {
 					for(int j = 0; j<15; j++) {
-						if(e.getSource() == jb2[i][j] && jb2[i][j].isBorderPainted()==true && jb2[i][j].getBackground() == Color.DARK_GRAY) {	// 우클릭된 버튼을 찾았고
-																																			// 해당 버튼이 기본 버튼 상태면
-																																			// 1번 깃발을 꽂음
-							jb2[i][j].setIcon(icon_flag);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
-							jb2[i][j].setBackground(Color.GRAY);																				// 색을 변경함
+						if(e.getSource() == jb2[i][j] && jb2[i][j].isBorderPainted()==true && jb2[i][j].getBackground() == Color.DARK_GRAY) {
+							jb2[i][j].setIcon(icon_flag);
+							jb2[i][j].setBackground(Color.GRAY);
 						}
 						else if(e.getSource() == jb2[i][j] && jb2[i][j].isBorderPainted()==true && jb2[i][j].getBackground() == Color.GRAY) {
-							jb2[i][j].setIcon(icon_flag2);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
-							jb2[i][j].setBackground(Color.LIGHT_GRAY);
-						}
-						else if(e.getSource() == jb2[i][j] && jb2[i][j].isBorderPainted()==true && jb2[i][j].getBackground() == Color.LIGHT_GRAY) {
-							jb2[i][j].setIcon(null);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
+							jb2[i][j].setIcon(null);
 							jb2[i][j].setBackground(Color.DARK_GRAY);
 						}
 					}
@@ -562,21 +586,15 @@ private class clickListener implements MouseListener{ 																					// �
 			}
 		}
 		if(level == 3) {
-			if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {																		// 클릭 버튼이 마우스 우클릭인경우
-				for(int i = 0; i<20; i++) {																									// 버튼을 찾기 위한 반복문
+			if(e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
+				for(int i = 0; i<20; i++) {
 					for(int j = 0; j<20; j++) {
-						if(e.getSource() == jb3[i][j] && jb3[i][j].isBorderPainted()==true && jb3[i][j].getBackground() == Color.DARK_GRAY) {	// 우클릭된 버튼을 찾았고
-																																			// 해당 버튼이 기본 버튼 상태면
-																																			// 1번 깃발을 꽂음
-							jb3[i][j].setIcon(icon_flag);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
-							jb3[i][j].setBackground(Color.GRAY);																				// 색을 변경함
+						if(e.getSource() == jb3[i][j] && jb3[i][j].isBorderPainted()==true && jb3[i][j].getBackground() == Color.DARK_GRAY) {
+							jb3[i][j].setIcon(icon_flag);
+							jb3[i][j].setBackground(Color.GRAY);
 						}
 						else if(e.getSource() == jb3[i][j] && jb3[i][j].isBorderPainted()==true && jb3[i][j].getBackground() == Color.GRAY) {
-							jb3[i][j].setIcon(icon_flag2);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
-							jb3[i][j].setBackground(Color.LIGHT_GRAY);
-						}
-						else if(e.getSource() == jb3[i][j] && jb3[i][j].isBorderPainted()==true && jb3[i][j].getBackground() == Color.LIGHT_GRAY) {
-							jb3[i][j].setIcon(null);																					// 해당 버튼의 아이콘을 깃발 이미지로 설정
+							jb3[i][j].setIcon(null);
 							jb3[i][j].setBackground(Color.DARK_GRAY);
 						}
 					}
@@ -599,7 +617,6 @@ private class clickListener implements MouseListener{ 																					// �
 		// TODO Auto-generated method stub
 		
 	}
-	
 }
 
 private void check(int i, int j) {																	// 비교하기 위한 함수
@@ -681,6 +698,7 @@ private void check(int i, int j) {																	// 비교하기 위한 함수
 					}
 				}
 			}
+			victory();																				// 승리 조건을 확인하기 위해 호출함
 		}
 		catch(java.lang.ArrayIndexOutOfBoundsException e){
 			
@@ -762,6 +780,7 @@ private void check(int i, int j) {																	// 비교하기 위한 함수
 				}
 				}
 			}
+			victory();
 		}
 		catch(java.lang.ArrayIndexOutOfBoundsException e){
 			
@@ -843,9 +862,88 @@ private void check(int i, int j) {																	// 비교하기 위한 함수
 					}
 				}
 			}
+			victory();
 		}
 		catch(java.lang.ArrayIndexOutOfBoundsException e){
 			
+		}
+	}
+}
+
+private void victory() {																			// 승리 조건을 확인
+	if(level == 1) {
+		int count = 0;
+		for(int i=0; i<10; i++) {
+			for(int j=0; j<10; j++) {
+				if(this.mine[i][j] != -1 && this.jb[i][j].isBorderPainted() == false) {				// 해당 i,j가 지뢰가 아니면서 BorderPainted가 false인 경우
+					count++;																		// 즉 지뢰가 아니면서 클릭된 경우를 비교함
+				}
+			}
+		}
+		if(count >= 90) {																			// 지뢰가 아니면서 클릭된 경우가 90이상인 경우
+			for(int i=0; i<10; i++) {
+				for(int j=0; j<10; j++) {
+					if(jb[i][j].isBorderPainted() == true) {										// BorderPainted가 true인 경우가 있다면
+						jb[i][j].setBorderPainted(false);											// false로 변경
+						if(mine[i][j] == -1)														// 지뢰면
+							jb[i][j].setIcon(icon_mine);											// 지뢰 이미지로 아이콘 변경
+					}
+				}
+			}
+			if(ending==false) {																		// 엔딩값이 거짓일 경우
+				JOptionPane.showMessageDialog(null, "축하합니다. 승리했습니다!");							// 승리 메시지 출력
+				ending = true;																		// 엔딩값을 참으로 설정
+			}
+		}
+	}																								// 이하 똑같음
+	if(level == 2) {
+		int count = 0;
+		for(int i=0; i<15; i++) {
+			for(int j=0; j<15; j++) {
+				if(this.mine2[i][j] != -1 && this.jb2[i][j].isBorderPainted() == false) {
+					count++;
+				}
+			}
+		}
+		if(count >= 195) {
+			for(int i=0; i<15; i++) {
+				for(int j=0; j<15; j++) {
+					if(jb2[i][j].isBorderPainted() == true) {
+						jb2[i][j].setBorderPainted(false);
+						if(mine2[i][j] == -1)
+							jb2[i][j].setIcon(icon_mine);
+					}
+				}
+			}
+			if(ending==false) {
+				JOptionPane.showMessageDialog(null, "축하합니다. 승리했습니다!");
+				ending = true;
+			}
+		}
+	}
+	if(level == 3) {
+		int count = 0;
+		for(int i=0; i<20; i++) {
+			for(int j=0; j<20; j++) {
+				if(this.mine3[i][j] != -1 && this.jb3[i][j].isBorderPainted() == false) {
+					count++;
+				}
+			}
+		}
+		if(count >= 360) {
+			for(int i=0; i<20; i++) {
+				for(int j=0; j<20; j++) {
+					if(jb3[i][j].isBorderPainted() == true) {
+						jb3[i][j].setBorderPainted(false);
+						if(mine3[i][j] == -1)
+							jb3[i][j].setIcon(icon_mine);
+					}
+				}
+			}
+			if(ending==false) {
+				JOptionPane.showMessageDialog(null, "축하합니다. 승리했습니다!");
+				ending = true;
+			}
 		}
 	}
 }
@@ -854,7 +952,7 @@ private void check(int i, int j) {																	// 비교하기 위한 함수
 public static void main(String[] args) {
 	// TODO Auto-generated method stub
 	new mine();																						// 프로그램 실행시 프레임 불러오기
-	}static int level = 0; static boolean lose = false;														// 전역변수 level 선언 및 0으로 초기화 함
+	}static int level = 0; static boolean ending = false;											// 전역변수 level 선언 및 0으로 초기화, ending 선언 및 false로 초기화
 }
 
 // 11.26
@@ -917,4 +1015,8 @@ public static void main(String[] args) {
  // 11.29
  // 깃발 세우는 기능 적용
  // 승리 조건만 만들면 끝남
+ 
+ // 11.30
+ // 승리조건 구현.
+ // 끝!
  

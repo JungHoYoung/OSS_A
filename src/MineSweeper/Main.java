@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     private int[][] mines;
     private char[][] Board;
-    private int row, column;
+    private int row, column, num;
     Random random = new Random();
     Scanner sc = new Scanner(System.in);
   

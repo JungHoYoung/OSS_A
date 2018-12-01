@@ -8,7 +8,7 @@ public class Main_hard {
     private int[][] mines;
     private char[][] Board;
     private int row, column;
-	private int num;
+private int num;
     Random random = new Random();
     Scanner sc = new Scanner(System.in);
 	
@@ -83,8 +83,16 @@ public class Main_hard {
 		if(num != 1 && num != 2)
     		System.out.println("1, 2, 3번으로 클릭, 깃발 꽂기, 깃발 삭제를 할 수 있습니다");
     	
+    	if( num ==1) {
+    		revealNeighbours();
+    		showMain();
+    	}else if(num == 2) {
     	flag(row, column, num);
+    	showMain();
+    	}else if(num ==3){
     	outFlag(row, column, num);
+    	showMain();
+    	}
     	
     	}while((row < 1 || row > 30 || column < 1 || column > 30) || (Board[row][column] != '-') || num != 2 || num != 3);
     	
